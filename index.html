@@ -1,0 +1,548 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Patrick Canady — CS · EE Engineer</title>
+<meta name="description" content="Patrick Canady — dual-degree Computer Science and Electrical Engineering engineer. FPGA/RTL design, embedded systems, computer vision, and software tooling." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230C0F14'/%3E%3Cpath d='M5 20 H10 V12 H16 V20 H21 V12 H27' fill='none' stroke='%23F0A93A' stroke-width='2.4' stroke-linejoin='round' stroke-linecap='round'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0C0F14;
+    --ink-2:#0F141A;
+    --surface:#151A21;
+    --surface-2:#1A212A;
+    --line:#222B35;
+    --line-2:#2D3845;
+    --text:#E7EAEE;
+    --muted:#8B95A2;
+    --muted-2:#5C6573;
+    --amber:#F0A93A;
+    --amber-deep:#C8852A;
+    --amber-soft:rgba(240,169,58,.10);
+    --cyan:#56C2D6;
+    --maxw:1140px;
+    --display:"Space Grotesk",sans-serif;
+    --body:"Inter",sans-serif;
+    --mono:"JetBrains Mono",ui-monospace,monospace;
+  }
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--text);
+    font-family:var(--body);
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none}
+  ::selection{background:var(--amber);color:#1a1206}
+
+  /* faint engineering grid behind everything */
+  body::before{
+    content:"";
+    position:fixed;inset:0;
+    background-image:
+      linear-gradient(var(--line) 1px,transparent 1px),
+      linear-gradient(90deg,var(--line) 1px,transparent 1px);
+    background-size:64px 64px;
+    opacity:.20;
+    -webkit-mask-image:radial-gradient(ellipse 90% 70% at 50% 0%,#000 30%,transparent 100%);
+            mask-image:radial-gradient(ellipse 90% 70% at 50% 0%,#000 30%,transparent 100%);
+    pointer-events:none;z-index:0;
+  }
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;position:relative;z-index:1}
+
+  /* ---------- top bar ---------- */
+  .topbar{
+    position:sticky;top:0;z-index:50;
+    backdrop-filter:blur(10px);
+    background:linear-gradient(to bottom,rgba(12,15,20,.92),rgba(12,15,20,.72));
+    border-bottom:1px solid var(--line);
+  }
+  .topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:62px}
+  .brand{display:flex;align-items:center;gap:11px;font-family:var(--mono);font-size:13px;letter-spacing:.04em}
+  .brand .chip{
+    width:26px;height:26px;border-radius:6px;border:1px solid var(--line-2);
+    display:grid;place-items:center;background:var(--surface);
+  }
+  .brand .chip svg{display:block}
+  .brand b{color:var(--text);font-weight:500}
+  .brand .blink{width:7px;height:7px;border-radius:50%;background:var(--amber);box-shadow:0 0 10px var(--amber);animation:blink 2.6s steps(1) infinite}
+  @keyframes blink{0%,72%{opacity:1}73%,100%{opacity:.25}}
+  nav.links{display:flex;gap:26px;font-family:var(--mono);font-size:12.5px;letter-spacing:.03em;color:var(--muted)}
+  nav.links a{position:relative;padding:4px 0;transition:color .2s}
+  nav.links a:hover{color:var(--text)}
+  nav.links a::after{content:"";position:absolute;left:0;bottom:-2px;height:1px;width:0;background:var(--amber);transition:width .25s}
+  nav.links a:hover::after{width:100%}
+  @media(max-width:680px){nav.links{display:none}}
+
+  /* ---------- hero ---------- */
+  .hero{padding:84px 0 0}
+  .eyebrow{
+    font-family:var(--mono);font-size:12.5px;letter-spacing:.22em;
+    color:var(--amber);text-transform:uppercase;display:flex;align-items:center;gap:12px;margin-bottom:26px;
+  }
+  .eyebrow::before{content:"";width:34px;height:1px;background:var(--amber);opacity:.6}
+  h1{
+    font-family:var(--display);font-weight:700;
+    font-size:clamp(52px,12vw,128px);line-height:.92;letter-spacing:-.03em;
+    margin:0;color:var(--text);
+  }
+  h1 .accent{color:var(--amber)}
+  .thesis{
+    max-width:600px;margin:30px 0 0;font-size:clamp(17px,2.3vw,20px);
+    color:#C3CAD3;line-height:1.55;
+  }
+  .thesis b{color:var(--text);font-weight:600}
+
+  /* signature waveform */
+  .scope{
+    margin:46px 0 0;
+    border:1px solid var(--line);border-radius:12px;background:var(--ink-2);
+    overflow:hidden;position:relative;
+  }
+  .scope-head{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:11px 16px;border-bottom:1px solid var(--line);font-family:var(--mono);
+    font-size:11px;letter-spacing:.12em;color:var(--muted-2);text-transform:uppercase;
+  }
+  .scope-head .live{display:flex;align-items:center;gap:8px;color:var(--amber)}
+  .scope-head .live i{width:6px;height:6px;border-radius:50%;background:var(--amber);box-shadow:0 0 8px var(--amber);animation:blink 1.8s steps(1) infinite}
+  .scope-svg{display:block;width:100%;height:148px;
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);
+            mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);}
+  .scope-svg .sig{fill:none;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round}
+  .scope-svg .clk{stroke:var(--amber)}
+  .scope-svg .dat{stroke:var(--cyan);opacity:.85}
+  .scope-svg .en{stroke:var(--amber);opacity:.62}
+  @media(max-width:560px){.scope-svg{height:120px}}
+
+  /* readout strip */
+  .readout{
+    display:flex;flex-wrap:wrap;gap:0;margin:0;padding:0;list-style:none;
+    border:1px solid var(--line);border-top:none;border-radius:0 0 12px 12px;
+    background:var(--surface);
+  }
+  .scope{border-radius:12px 12px 0 0}
+  .readout li{
+    flex:1 1 0;min-width:148px;padding:16px 18px;
+    border-right:1px solid var(--line);
+  }
+  .readout li:last-child{border-right:none}
+  .readout .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:var(--muted-2);text-transform:uppercase}
+  .readout .v{font-family:var(--display);font-size:21px;font-weight:500;margin-top:6px;color:var(--text)}
+  .readout .v em{font-style:normal;color:var(--amber)}
+  @media(max-width:560px){.readout li{flex:1 1 50%;min-width:0;border-bottom:1px solid var(--line)}
+    .readout li:nth-child(odd){border-right:1px solid var(--line)}
+    .readout li:nth-child(even){border-right:none}}
+
+  /* ---------- sections ---------- */
+  .section{padding:96px 0 0}
+  .section.last{padding-bottom:0}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:42px}
+  .sec-head .pin{font-family:var(--mono);font-size:12px;color:var(--amber);letter-spacing:.08em}
+  .sec-head h2{
+    font-family:var(--display);font-weight:700;font-size:clamp(26px,4vw,38px);
+    letter-spacing:-.02em;margin:0;color:var(--text);
+  }
+  .sec-head .rule{flex:1;height:1px;background:linear-gradient(90deg,var(--line-2),transparent);align-self:center;margin-left:6px}
+
+  /* experience / entries */
+  .entry{
+    display:grid;grid-template-columns:200px 1fr;gap:38px;
+    padding:30px 0;border-top:1px solid var(--line);
+  }
+  .entry:first-of-type{border-top:none;padding-top:0}
+  .entry .when{font-family:var(--mono);font-size:12.5px;color:var(--muted);line-height:1.7}
+  .entry .when .org{color:var(--text);display:block;margin-bottom:6px;font-weight:500;letter-spacing:.02em}
+  .entry .when .loc{display:block;color:var(--muted-2);margin-top:6px}
+  .entry h3{font-family:var(--display);font-weight:500;font-size:21px;margin:0 0 4px;letter-spacing:-.01em}
+  .entry .role-sub{font-family:var(--mono);font-size:12px;color:var(--amber);margin-bottom:16px;letter-spacing:.02em}
+  .entry ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:12px}
+  .entry ul li{position:relative;padding-left:22px;color:#C3CAD3;font-size:15px;line-height:1.55}
+  .entry ul li::before{
+    content:"";position:absolute;left:0;top:10px;width:9px;height:1px;background:var(--amber);
+  }
+  .entry ul li b{color:var(--text);font-weight:600}
+  @media(max-width:720px){.entry{grid-template-columns:1fr;gap:16px;padding:26px 0}}
+
+  /* projects */
+  .projects{display:flex;flex-direction:column;gap:18px}
+  .card{
+    border:1px solid var(--line);border-radius:14px;background:var(--surface);
+    padding:30px 32px;position:relative;overflow:hidden;
+    transition:border-color .25s,transform .25s,background .25s;
+  }
+  .card::before{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--amber);
+    transform:scaleY(0);transform-origin:top;transition:transform .3s ease;
+  }
+  .card:hover{border-color:var(--line-2);background:var(--surface-2);transform:translateY(-2px)}
+  .card:hover::before{transform:scaleY(1)}
+  .card-top{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:10px 20px;margin-bottom:6px}
+  .card h3{font-family:var(--display);font-weight:500;font-size:23px;margin:0;letter-spacing:-.01em}
+  .card .span{font-family:var(--mono);font-size:12px;color:var(--muted)}
+  .card .role-sub{font-family:var(--mono);font-size:12.5px;color:var(--amber);margin:2px 0 16px;letter-spacing:.01em}
+  .card p{margin:0 0 18px;color:#C3CAD3;font-size:15px;line-height:1.6;max-width:780px}
+  .card p b{color:var(--text);font-weight:600}
+  .tags{display:flex;flex-wrap:wrap;gap:8px}
+  .tags span{
+    font-family:var(--mono);font-size:11.5px;color:var(--muted);
+    border:1px solid var(--line-2);border-radius:6px;padding:5px 10px;letter-spacing:.02em;
+    transition:color .2s,border-color .2s;
+  }
+  .card:hover .tags span{color:#C3CAD3}
+
+  /* education */
+  .edu-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:18px}
+  @media(max-width:760px){.edu-grid{grid-template-columns:1fr}}
+  .panel{border:1px solid var(--line);border-radius:14px;background:var(--surface);padding:28px 30px}
+  .panel h3{font-family:var(--display);font-weight:500;font-size:20px;margin:0 0 4px;letter-spacing:-.01em}
+  .panel .school{font-family:var(--mono);font-size:12.5px;color:var(--muted);margin-bottom:22px}
+  .degree{display:flex;align-items:baseline;justify-content:space-between;gap:14px;padding:13px 0;border-top:1px solid var(--line)}
+  .degree:first-of-type{border-top:none;padding-top:0}
+  .degree .d-name{font-size:15px;color:var(--text)}
+  .degree .d-name span{display:block;font-family:var(--mono);font-size:11.5px;color:var(--amber);margin-top:3px;letter-spacing:.03em}
+  .degree .d-when{font-family:var(--mono);font-size:12px;color:var(--muted-2);white-space:nowrap}
+  .honors{display:flex;flex-direction:column;gap:14px}
+  .honors .h-row{display:flex;align-items:baseline;gap:14px}
+  .honors .h-row .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--muted-2);text-transform:uppercase;width:96px;flex-shrink:0;padding-top:2px}
+  .honors .h-row .val{font-size:15px;color:#C3CAD3}
+  .honors .h-row .val em{font-style:normal;color:var(--text);font-weight:600}
+  .course-block{margin-top:22px}
+  .course-block .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--muted-2);text-transform:uppercase;margin-bottom:9px}
+  .course-block .list{font-size:14px;color:#AEB6C0;line-height:1.75}
+
+  /* stack */
+  .stack{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+  @media(max-width:760px){.stack{grid-template-columns:1fr}}
+  .stack .panel h4{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;color:var(--amber);text-transform:uppercase;margin:0 0 16px;font-weight:500}
+  .stack .panel .items{display:flex;flex-wrap:wrap;gap:8px}
+  .stack .panel .items span{
+    font-family:var(--mono);font-size:12.5px;color:#C3CAD3;
+    border:1px solid var(--line);border-radius:6px;padding:6px 11px;background:var(--ink-2);
+    transition:border-color .2s,color .2s;
+  }
+  .stack .panel .items span:hover{border-color:var(--amber-deep);color:var(--text)}
+  .stack .panel.soft .items span{display:block;width:100%;border:none;background:none;padding:0;
+    position:relative;padding-left:18px;color:#C3CAD3;font-size:14.5px;font-family:var(--body)}
+  .stack .panel.soft .items{gap:11px}
+  .stack .panel.soft .items span::before{content:"";position:absolute;left:0;top:11px;width:8px;height:1px;background:var(--amber)}
+
+  /* ---------- footer / contact ---------- */
+  footer{margin-top:104px;border-top:1px solid var(--line);background:var(--ink-2);position:relative;z-index:1}
+  .foot-grid{display:grid;grid-template-columns:1fr auto;gap:40px;padding:72px 0 40px;align-items:end}
+  @media(max-width:680px){.foot-grid{grid-template-columns:1fr;gap:34px}}
+  .foot-grid .big{font-family:var(--display);font-weight:700;font-size:clamp(30px,6vw,52px);line-height:1.02;letter-spacing:-.025em;margin:0}
+  .foot-grid .big a{color:var(--amber);transition:opacity .2s}
+  .foot-grid .big a:hover{opacity:.78}
+  .foot-grid .sub{font-family:var(--mono);font-size:12.5px;color:var(--muted);margin-top:18px;letter-spacing:.02em}
+  .contacts{display:flex;flex-direction:column;gap:13px;font-family:var(--mono);font-size:13.5px}
+  .contacts a{display:flex;align-items:center;gap:11px;color:var(--muted);transition:color .2s}
+  .contacts a:hover{color:var(--amber)}
+  .contacts a svg{flex-shrink:0;opacity:.8}
+  .contacts a span{letter-spacing:.01em}
+  .foot-bottom{border-top:1px solid var(--line);padding:20px 0;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
+    font-family:var(--mono);font-size:11.5px;color:var(--muted-2);letter-spacing:.04em}
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  /* focus */
+  a:focus-visible,button:focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:3px}
+
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+    html{scroll-behavior:auto}
+    .reveal{opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Patrick Canady — home">
+      <span class="chip" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 32 32"><path d="M4 21 H9 V12 H15 V21 H21 V12 H28" fill="none" stroke="#F0A93A" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/></svg>
+      </span>
+      <b>patrick&nbsp;canady</b><span class="blink" aria-hidden="true"></span>
+    </a>
+    <nav class="links" aria-label="Primary">
+      <a href="#work">work</a>
+      <a href="#experience">experience</a>
+      <a href="#education">education</a>
+      <a href="#stack">stack</a>
+      <a href="#contact">contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero" aria-label="Introduction">
+    <div class="wrap">
+      <p class="eyebrow">Computer Science · Electrical Engineering</p>
+      <h1>Patrick<br><span class="accent">Canady</span></h1>
+      <p class="thesis">I build systems at the boundary of silicon and software — from <b>FPGA fabric and embedded firmware</b> to the <b>vision pipelines and developer tools</b> that run on top. Dual-degree engineer, comfortable owning a system from concept to deployment.</p>
+
+      <!-- signature waveform -->
+      <div class="scope" aria-hidden="true">
+        <div class="scope-head">
+          <span>logic capture · ch0–ch2 · 100&nbsp;MHz</span>
+          <span class="live"><i></i>live</span>
+        </div>
+        <svg class="scope-svg" viewBox="0 0 1200 148" preserveAspectRatio="none" role="img">
+          <defs>
+            <g id="period">
+              <path class="sig clk" d="M0 44 H20 V18 H40 V44 H60 V18 H80 V44 H100 V18 H120 V44 H140 V18 H160 V44 H180 V18 H200 V44 H220 V18 H240 V44 H260 V18 H280 V44 H300 V18 H320 V44 H340 V18 H360 V44 H380 V18 H400 V44 H420 V18 H440 V44 H460 V18 H480 V44 H500 V18 H520 V44 H540 V18 H560 V44 H580 V18 H600 V44"/>
+              <path class="sig dat" d="M0 90 H60 V64 H100 V90 H140 V64 H160 V90 H260 V64 H300 V90 H320 V64 H400 V90 H460 V64 H500 V90 H560 V64 H600 V90"/>
+              <path class="sig en"  d="M0 136 H180 V110 H380 V136 H600"/>
+            </g>
+          </defs>
+          <text x="14" y="34" fill="#5C6573" font-family="JetBrains Mono, monospace" font-size="11">CLK</text>
+          <text x="14" y="80" fill="#5C6573" font-family="JetBrains Mono, monospace" font-size="11">DAT</text>
+          <text x="14" y="126" fill="#5C6573" font-family="JetBrains Mono, monospace" font-size="11">EN</text>
+          <g class="trace">
+            <use href="#period" x="0"/>
+            <use href="#period" x="600"/>
+            <use href="#period" x="1200"/>
+          </g>
+        </svg>
+      </div>
+
+      <ul class="readout">
+        <li><div class="k">GPA</div><div class="v"><em>3.92</em> / 4.00</div></li>
+        <li><div class="k">Honors</div><div class="v">Summa <em>×2</em></div></li>
+        <li><div class="k">Teaching</div><div class="v">~3 <em>yrs</em></div></li>
+        <li><div class="k">Timing closed</div><div class="v"><em>100</em> MHz</div></li>
+        <li><div class="k">Switching ↓</div><div class="v"><em>10×</em></div></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section class="section" id="work" aria-label="Selected work">
+    <div class="wrap">
+      <div class="sec-head reveal"><span class="pin">▪</span><h2>Selected work</h2><span class="rule"></span></div>
+      <div class="projects">
+
+        <article class="card reveal">
+          <div class="card-top">
+            <h3>Grappler Camera System</h3>
+            <span class="span">Aug 2025 — May 2026</span>
+          </div>
+          <div class="role-sub">Hardware Lead · distributed embedded + computer vision</div>
+          <p>Led a multidisciplinary team building an <b>autonomous multi-camera tracking platform</b> for combat sports. Each Raspberry Pi&nbsp;5 node runs real-time <b>YOLO11n-pose</b> inference on a live feed and drives PCA9685 servo HATs to keep athletes centered in frame, coordinated by a Flask/Socket.IO server over a custom inter-node protocol. Owned hardware design and integration across the full lifecycle, plus the operation and evidence manuals and scholarship-in-practice submission.</p>
+          <div class="tags"><span>Raspberry Pi 5</span><span>YOLO11n-pose</span><span>PCA9685</span><span>Flask</span><span>Socket.IO</span><span>Python</span></div>
+        </article>
+
+        <article class="card reveal">
+          <div class="card-top">
+            <h3>Power-Aware Systolic MAC Array</h3>
+            <span class="span">Jan — Apr 2026</span>
+          </div>
+          <div class="role-sub">RTL Designer · FPGA / digital design</div>
+          <p>Designed a fully synthesizable <b>3×3 output-stationary systolic MAC array</b> in Verilog with wavefront clock gating and DVFS-style power modes (FULL / HALF / SLEEP) on a Xilinx Zynq UltraScale+. Led the RTL for the activity tracker, clock-gate controller, and mode FSM. <b>Closed timing at 100&nbsp;MHz (WNS = +6.98&nbsp;ns)</b> and demonstrated up to <b>10× lower switching activity</b> versus the ungated baseline, validated across 12 post-implementation power scenarios.</p>
+          <div class="tags"><span>Verilog</span><span>Zynq UltraScale+</span><span>Vivado</span><span>Clock gating</span><span>DVFS</span><span>Power analysis</span></div>
+        </article>
+
+        <article class="card reveal">
+          <div class="card-top">
+            <h3>C++ Autograding Framework</h3>
+            <span class="span">2024 — 2026</span>
+          </div>
+          <div class="role-sub">Systems Tool · in active use each semester</div>
+          <p>A modular, extensible autograding engine: compiler diagnostics, <b>rubric-driven deduction tracking</b> with scope capping, <b>libclang AST static analysis</b>, automated program I/O testing, and LLM-assisted review (Ollama / qwen3:14b) for subjective criteria. A batch interactive interface adds back-navigation, skip controls, and deduction undo — collapsing 800+ lines of one-off scripting per assignment down to ~150-line rubric files.</p>
+          <div class="tags"><span>Python</span><span>libclang</span><span>Ollama</span><span>subprocess I/O</span><span>AST analysis</span></div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section class="section" id="experience" aria-label="Experience">
+    <div class="wrap">
+      <div class="sec-head reveal"><span class="pin">▪</span><h2>Experience</h2><span class="rule"></span></div>
+
+      <div class="entry reveal">
+        <div class="when">
+          <span class="org">Florida State University</span>
+          Aug 2023 — May 2026
+          <span class="loc">Dept. of Computer Science · Tallahassee, FL</span>
+        </div>
+        <div>
+          <h3>Engineering Teaching Assistant &amp; Tool Developer</h3>
+          <div class="role-sub">COP 3014 · COP 3363 · COP 3330 · CGS 2100</div>
+          <ul>
+            <li>Served nearly <b>3 years as a technical instructor across 4 CS courses</b>, mentoring 100+ students per semester through weekly recitations on C++, data structures, algorithm analysis, and debugging methodology.</li>
+            <li>Architected a <b>production-grade Python autograding framework</b> from scratch — modular rubrics, libclang AST analysis, automated I/O testing, and LLM-assisted review — cutting per-assignment engineering time by ~80%.</li>
+            <li>Scoped, designed, tested, and iterated on the tooling with no direct supervision, operating as <b>technical owner</b> of a system course staff rely on each semester.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="entry reveal">
+        <div class="when">
+          <span class="org">BST Global</span>
+          May 2023 — Aug 2023
+          <span class="loc">Internship · Tampa, FL</span>
+        </div>
+        <div>
+          <h3>Data Consultant</h3>
+          <div class="role-sub">ERP data conversion · SQL ETL</div>
+          <ul>
+            <li>Migrated client project data from legacy platforms into BST Global's ERP system, working through complex data-mapping challenges with <b>SQL-based ETL workflows</b>.</li>
+            <li>Independently built an <b>Excel-based machine checkout tool</b> with embedded scripting to eliminate scheduling conflicts, with full user and developer documentation.</li>
+            <li>Presented data-conversion progress in 3 formal stakeholder presentations and ran daily Agile stand-ups with cross-functional teams.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section class="section" id="education" aria-label="Education">
+    <div class="wrap">
+      <div class="sec-head reveal"><span class="pin">▪</span><h2>Education</h2><span class="rule"></span></div>
+      <div class="edu-grid">
+        <div class="panel reveal">
+          <h3>Dual-Degree Program</h3>
+          <div class="school">Florida State University · FAMU-FSU College of Engineering — Tallahassee, FL</div>
+          <div class="degree">
+            <div class="d-name">B.S. Computer Science<span>Summa Cum Laude</span></div>
+            <div class="d-when">May 2026</div>
+          </div>
+          <div class="degree">
+            <div class="d-name">B.S. Electrical Engineering<span>Summa Cum Laude</span></div>
+            <div class="d-when">May 2026</div>
+          </div>
+          <div class="degree">
+            <div class="d-name">Minor in Mathematics<span>GPA 3.92 / 4.00</span></div>
+            <div class="d-when">—</div>
+          </div>
+        </div>
+        <div class="panel reveal">
+          <div class="honors">
+            <div class="h-row"><div class="lbl">Honors</div><div class="val"><em>President's List ×4</em> · Dean's List ×5, across all undergraduate semesters</div></div>
+          </div>
+          <div class="course-block">
+            <div class="lbl">CS Coursework</div>
+            <div class="list">Deep &amp; Reinforcement Learning · Operating Systems · Computer Architecture · Data Structures II · Compiler Writing · Parallel &amp; Distributed Programming · Theory of Computation · Software Engineering · Mobile Programming</div>
+          </div>
+          <div class="course-block">
+            <div class="lbl">EE Coursework</div>
+            <div class="list">System-on-Chip Design · Advanced Microprocessor Systems · Digital Logic Design · Intro to VHDL · Electromagnetic Fields · Digital Communications · Control Systems · Electronics I · Signals &amp; Linear Systems · Cybersecurity</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STACK -->
+  <section class="section" id="stack" aria-label="Technical stack">
+    <div class="wrap">
+      <div class="sec-head reveal"><span class="pin">▪</span><h2>Stack</h2><span class="rule"></span></div>
+      <div class="stack">
+        <div class="panel reveal">
+          <h4>Languages</h4>
+          <div class="items"><span>Python</span><span>C++</span><span>C</span><span>Verilog</span><span>VHDL</span><span>Java</span><span>JavaScript</span><span>SQL</span><span>ARM Assembly</span><span>Bash</span></div>
+        </div>
+        <div class="panel reveal">
+          <h4>Hardware &amp; Embedded</h4>
+          <div class="items"><span>Xilinx Zynq UltraScale+</span><span>Vivado</span><span>RTL design &amp; sim</span><span>MSP432</span><span>Raspberry Pi 5</span><span>PCA9685</span><span>ARM NVIC / interrupts</span><span>I²C / SPI / UART</span><span>Clock gating</span><span>Power analysis</span><span>Control systems</span></div>
+        </div>
+        <div class="panel reveal">
+          <h4>AI / ML &amp; Vision</h4>
+          <div class="items"><span>PyTorch</span><span>YOLO (ultralytics)</span><span>BERT / Transformers</span><span>scikit-learn</span><span>Real-time pose estimation</span><span>DQN / C51 / PPO</span><span>CleanRL</span></div>
+        </div>
+        <div class="panel reveal">
+          <h4>Software &amp; Tools</h4>
+          <div class="items"><span>Flask</span><span>Socket.IO</span><span>Git / GitHub</span><span>Linux</span><span>libclang AST</span><span>Jupyter</span><span>LaTeX</span><span>Matplotlib</span><span>Supabase</span></div>
+        </div>
+        <div class="panel soft reveal" style="grid-column:1 / -1">
+          <h4>Leadership &amp; Collaboration</h4>
+          <div class="items"><span>Team leadership &amp; cross-functional collaboration</span><span>Technical mentorship, coaching, and curriculum design</span><span>Stakeholder communication &amp; technical writing</span><span>Agile / stand-up workflows and self-directed project management</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- CONTACT / FOOTER -->
+<footer id="contact">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <p class="big">Let's build<br>something <a href="mailto:patrick.canady@ifoundry.com">deliberate.</a></p>
+        <p class="sub">Open to engineering roles spanning hardware, FPGA/RTL, embedded, and systems software.</p>
+      </div>
+      <nav class="contacts" aria-label="Contact links">
+        <a href="mailto:patrick.canady@ifoundry.com">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+          <span>patrick.canady@ifoundry.com</span>
+        </a>
+        <a href="https://github.com/peejerator" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2A10 10 0 0 0 8.84 21.5c.5.08.66-.22.66-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.1-1.47-1.1-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.6 9.6 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.16.57.67.48A10 10 0 0 0 12 2Z"/></svg>
+          <span>github.com/peejerator</span>
+        </a>
+        <a href="https://linkedin.com/in/patrick-canady" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14ZM8.34 18.34V9.99H5.67v8.35h2.67ZM7 8.82a1.55 1.55 0 1 0 0-3.1 1.55 1.55 0 0 0 0 3.1Zm11.34 9.52v-4.58c0-2.45-1.31-3.59-3.06-3.59-1.41 0-2.04.78-2.39 1.32v-1.13h-2.67c.04.75 0 8.35 0 8.35h2.67v-4.66c0-.24.02-.48.09-.65.19-.48.63-.97 1.37-.97.97 0 1.36.74 1.36 1.82v4.46h2.63Z"/></svg>
+          <span>linkedin.com/in/patrick-canady</span>
+        </a>
+        <a href="#" tabindex="-1" style="pointer-events:none;color:var(--muted-2)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-4.5-7-10a7 7 0 0 1 14 0c0 5.5-7 10-7 10Z"/><circle cx="12" cy="11" r="2.5"/></svg>
+          <span>Tampa, FL</span>
+        </a>
+      </nav>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Patrick Canady</span>
+      <span>CS · EE — built with hand-written HTML</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // scroll reveal
+  (function(){
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var els = document.querySelectorAll('.reveal');
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    },{threshold:0.12, rootMargin:'0px 0px -40px 0px'});
+    els.forEach(function(el){ io.observe(el); });
+  })();
+
+  // scrolling waveform capture
+  (function(){
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var trace = document.querySelector('.scope .trace');
+    if(!trace) return;
+    var x = 0, last = performance.now();
+    function frame(now){
+      var dt = now - last; last = now;
+      x -= dt * 0.045;            // scroll speed
+      if(x <= -600) x += 600;     // pattern repeats every 600 units
+      trace.setAttribute('transform','translate('+x+',0)');
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  })();
+</script>
+</body>
+</html>
