@@ -71,11 +71,10 @@
   }
   .topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:62px}
   .brand{display:flex;align-items:center;gap:11px;font-family:var(--mono);font-size:13px;letter-spacing:.04em}
-  .brand .chip{
-    width:26px;height:26px;border-radius:6px;border:1px solid var(--line-2);
-    display:grid;place-items:center;background:var(--surface);
+  .brand .avatar{
+    width:30px;height:30px;border-radius:50%;object-fit:cover;
+    border:1px solid var(--line-2);display:block;
   }
-  .brand .chip svg{display:block}
   .brand b{color:var(--text);font-weight:500}
   .brand .blink{width:7px;height:7px;border-radius:50%;background:var(--amber);box-shadow:0 0 10px var(--amber);animation:blink 2.6s steps(1) infinite}
   @keyframes blink{0%,72%{opacity:1}73%,100%{opacity:.25}}
@@ -108,13 +107,13 @@
   /* ---- hero signature: toggle + stage ---- */
   .sig-toggle{
     display:inline-flex;margin:46px 0 16px;border:1px solid var(--line);
-    border-radius:9px;overflow:hidden;background:var(--ink-2);
+    border-radius:9px;overflow:hidden;background:var(--ink-2);max-width:100%;
   }
   .seg{
     appearance:none;border:none;background:transparent;cursor:pointer;
     font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;
     color:var(--muted);padding:9px 16px;border-right:1px solid var(--line);
-    transition:color .2s,background .2s;
+    transition:color .2s,background .2s;white-space:nowrap;
   }
   .seg:last-child{border-right:none}
   .seg:hover{color:var(--text)}
@@ -123,31 +122,43 @@
 
   .sig-stage{
     border:1px solid var(--line);border-radius:12px;background:var(--ink-2);
-    min-height:212px;display:flex;align-items:center;justify-content:center;
+    min-height:236px;display:flex;align-items:center;justify-content:center;
     overflow:hidden;position:relative;padding:24px;
   }
-  @media(max-width:560px){.sig-stage{min-height:176px;padding:18px}}
+  @media(max-width:560px){.sig-stage{min-height:188px;padding:16px}}
   .sig-variant{width:100%;display:flex;flex-direction:column;align-items:center;gap:16px}
   .sig-variant[hidden]{display:none}
   .sig-cap{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2)}
   .sig-cap b{color:var(--muted);font-weight:500}
 
-  /* variant: stripped trace */
-  .trace-svg{display:block;width:100%;height:128px;
-    -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
-            mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);}
-  .trace-svg path{fill:none;stroke:var(--amber);stroke-width:2.6;stroke-linejoin:round;stroke-linecap:round}
-  .scrolltrace{animation:scrollx 13s linear infinite}
+  /* variant 1: logic-capture scope */
+  .scope{width:100%;position:relative}
+  .scope-head{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:0 2px 11px;margin-bottom:8px;border-bottom:1px solid var(--line);font-family:var(--mono);
+    font-size:11px;letter-spacing:.12em;color:var(--muted-2);text-transform:uppercase;
+  }
+  .scope-head .live{display:flex;align-items:center;gap:8px;color:var(--amber)}
+  .scope-head .live i{width:6px;height:6px;border-radius:50%;background:var(--amber);box-shadow:0 0 8px var(--amber);animation:blink 1.8s steps(1) infinite}
+  .scope-svg{display:block;width:100%;height:130px;
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);
+            mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);}
+  .scope-svg .sig{fill:none;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round}
+  .scope-svg .clk{stroke:var(--amber)}
+  .scope-svg .dat{stroke:var(--cyan);opacity:.85}
+  .scope-svg .en{stroke:var(--amber);opacity:.62}
+  .scope .trace{animation:scrollx 14s linear infinite}
   @keyframes scrollx{from{transform:translateX(0)}to{transform:translateX(-600px)}}
+  @media(max-width:560px){.scope-svg{height:108px}}
 
-  /* variant: systolic array */
+  /* variant 2: systolic array */
   .array-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
   .cell{
     width:54px;height:54px;border-radius:10px;border:1px solid var(--line-2);
     background:var(--surface);display:grid;place-items:center;position:relative;
     animation:wf 2.6s ease-in-out infinite;
   }
-  .cell::after{content:"";width:7px;height:7px;border-radius:2px;background:var(--muted-2);transition:none;animation:wfdot 2.6s ease-in-out infinite}
+  .cell::after{content:"";width:7px;height:7px;border-radius:2px;background:var(--muted-2);animation:wfdot 2.6s ease-in-out infinite}
   @media(max-width:560px){.cell{width:44px;height:44px}}
   @keyframes wf{
     0%,68%,100%{border-color:var(--line-2);background:var(--surface);box-shadow:none}
@@ -155,9 +166,9 @@
   }
   @keyframes wfdot{0%,68%,100%{background:var(--muted-2)}14%{background:var(--amber);box-shadow:0 0 8px var(--amber)}}
 
-  /* variant: pose tracking */
+  /* variant 3: pose tracking */
   .pose-svg{display:block;width:100%;max-width:520px;height:188px}
-  @media(max-width:560px){.pose-svg{height:152px}}
+  @media(max-width:560px){.pose-svg{height:150px}}
   .pose-fig{animation:sway 6s ease-in-out infinite}
   .pose-fig line{stroke:var(--amber);stroke-width:2.4;stroke-linecap:round}
   .pose-fig circle{fill:var(--amber)}
@@ -168,13 +179,12 @@
   @keyframes sway{0%,100%{transform:translateX(-16px)}50%{transform:translateX(16px)}}
   @keyframes track{0%,100%{transform:translateX(-12px)}50%{transform:translateX(12px)}}
 
-  /* variant: silicon / IC */
+  /* variant 4: silicon / IC */
   .chip{
     position:relative;width:300px;max-width:100%;padding:30px 34px;
     border:1px solid var(--line-2);border-radius:12px;background:var(--surface);
     background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
-    background-size:18px 18px;background-blend-mode:soft-light;
-    text-align:center;
+    background-size:18px 18px;text-align:center;
   }
   .chip::before,.chip::after{
     content:"";position:absolute;top:18px;bottom:18px;width:6px;
@@ -332,9 +342,7 @@
 <header class="topbar">
   <div class="wrap">
     <a class="brand" href="#top" aria-label="Patrick Canady — home">
-      <span class="chip" aria-hidden="true">
-        <svg width="18" height="18" viewBox="0 0 32 32"><path d="M4 21 H9 V12 H15 V21 H21 V12 H28" fill="none" stroke="#F0A93A" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/></svg>
-      </span>
+      <img class="avatar" src="data:image/jpeg;base64,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" alt="Patrick Canady" width="30" height="30" />
       <b>patrick&nbsp;canady</b><span class="blink" aria-hidden="true"></span>
     </a>
     <nav class="links" aria-label="Primary">
@@ -357,23 +365,38 @@
 
       <!-- hero signature: toggle between four variants -->
       <div class="sig-toggle" role="tablist" aria-label="Hero visual">
-        <button class="seg" role="tab" id="tab-trace"   aria-controls="sig-trace"   data-sig="trace"   aria-selected="true">Trace</button>
+        <button class="seg" role="tab" id="tab-scope"   aria-controls="sig-scope"   data-sig="scope"   aria-selected="true">Scope</button>
         <button class="seg" role="tab" id="tab-array"   aria-controls="sig-array"   data-sig="array"   aria-selected="false" tabindex="-1">Array</button>
         <button class="seg" role="tab" id="tab-pose"    aria-controls="sig-pose"    data-sig="pose"    aria-selected="false" tabindex="-1">Pose</button>
         <button class="seg" role="tab" id="tab-silicon" aria-controls="sig-silicon" data-sig="silicon" aria-selected="false" tabindex="-1">Silicon</button>
       </div>
 
       <div class="sig-stage">
-        <!-- 1 · stripped trace -->
-        <div class="sig-variant" id="sig-trace" role="tabpanel" aria-labelledby="tab-trace" data-sig="trace">
-          <svg class="trace-svg" viewBox="0 0 1200 120" preserveAspectRatio="none" aria-hidden="true">
-            <defs>
-              <path id="pulse" d="M0 78 H80 V42 H140 V78 H220 V42 H260 V78 H360 V42 H440 V78 H480 V42 H520 V78 H600"/>
-            </defs>
-            <g class="scrolltrace">
-              <use href="#pulse" x="0"/><use href="#pulse" x="600"/><use href="#pulse" x="1200"/>
-            </g>
-          </svg>
+        <!-- 1 · logic-capture scope -->
+        <div class="sig-variant" id="sig-scope" role="tabpanel" aria-labelledby="tab-scope" data-sig="scope">
+          <div class="scope" aria-hidden="true">
+            <div class="scope-head">
+              <span>logic capture · ch0–ch2 · 100&nbsp;MHz</span>
+              <span class="live"><i></i>live</span>
+            </div>
+            <svg class="scope-svg" viewBox="0 0 1200 148" preserveAspectRatio="none" role="img">
+              <defs>
+                <g id="period">
+                  <path class="sig clk" d="M0 44 H20 V18 H40 V44 H60 V18 H80 V44 H100 V18 H120 V44 H140 V18 H160 V44 H180 V18 H200 V44 H220 V18 H240 V44 H260 V18 H280 V44 H300 V18 H320 V44 H340 V18 H360 V44 H380 V18 H400 V44 H420 V18 H440 V44 H460 V18 H480 V44 H500 V18 H520 V44 H540 V18 H560 V44 H580 V18 H600 V44"/>
+                  <path class="sig dat" d="M0 90 H60 V64 H100 V90 H140 V64 H160 V90 H260 V64 H300 V90 H320 V64 H400 V90 H460 V64 H500 V90 H560 V64 H600 V90"/>
+                  <path class="sig en"  d="M0 136 H180 V110 H380 V136 H600"/>
+                </g>
+              </defs>
+              <text x="14" y="34" fill="#5C6573" font-family="JetBrains Mono, monospace" font-size="11">CLK</text>
+              <text x="14" y="80" fill="#5C6573" font-family="JetBrains Mono, monospace" font-size="11">DAT</text>
+              <text x="14" y="126" fill="#5C6573" font-family="JetBrains Mono, monospace" font-size="11">EN</text>
+              <g class="trace">
+                <use href="#period" x="0"/>
+                <use href="#period" x="600"/>
+                <use href="#period" x="1200"/>
+              </g>
+            </svg>
+          </div>
         </div>
 
         <!-- 2 · systolic array -->
@@ -441,8 +464,6 @@
         <li><div class="k">GPA</div><div class="v"><em>3.92</em> / 4.00</div></li>
         <li><div class="k">Honors</div><div class="v">Summa <em>×2</em></div></li>
         <li><div class="k">Teaching</div><div class="v">~3 <em>yrs</em></div></li>
-        <li><div class="k">Timing closed</div><div class="v"><em>100</em> MHz</div></li>
-        <li><div class="k">Switching ↓</div><div class="v"><em>10×</em></div></li>
       </ul>
     </div>
   </section>
