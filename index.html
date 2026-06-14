@@ -104,6 +104,8 @@
   }
   .thesis b{color:var(--text);font-weight:600}
 
+  .hero-signature{margin:24px 0 0}
+
   /* ---- hero signature: logic-capture scope ---- */
   .sig-stage{
     margin:46px 0 0;border:1px solid var(--line);border-radius:12px;background:var(--ink-2);
@@ -126,6 +128,16 @@
   @keyframes scrollx{from{transform:translateX(0)}to{transform:translateX(-600px)}}
   @media(max-width:560px){.scope-svg{height:108px}}
 
+  .sig-bg{
+    position:relative;overflow:hidden;border:1px solid var(--line);border-radius:16px;background:linear-gradient(180deg,var(--surface),var(--ink-2));
+    padding:22px 24px;
+  }
+  .sig-bg::before{
+    content:"";position:absolute;inset:-10% -15% auto auto;width:420px;height:420px;border-radius:50%;
+    background:radial-gradient(circle,rgba(240,169,58,.12),rgba(240,169,58,0) 70%);filter:blur(6px);pointer-events:none;
+  }
+  .sig-bg .scope{position:relative;z-index:1;opacity:.58;mix-blend-mode:screen}
+
   /* readout strip (standalone) */
   .readout{
     display:flex;flex-wrap:wrap;gap:0;margin:14px 0 0;padding:0;list-style:none;
@@ -142,6 +154,25 @@
   @media(max-width:560px){.readout li{flex:1 1 50%;min-width:0;border-bottom:1px solid var(--line)}
     .readout li:nth-child(odd){border-right:1px solid var(--line)}
     .readout li:nth-child(even){border-right:none}}
+
+  body[data-graphic-variant="4"] .hero{position:relative}
+  body[data-graphic-variant="4"] .hero .wrap{position:relative}
+  body[data-graphic-variant="4"] .hero .wrap > :not(.hero-signature){position:relative;z-index:1}
+  body[data-graphic-variant="4"] .hero .wrap{padding-bottom:92px}
+  body[data-graphic-variant="4"] .hero-signature{display:block;position:absolute;left:-28px;right:-28px;top:88px;z-index:0;pointer-events:none;margin:0}
+  body[data-graphic-variant="4"] .hero-signature .variant-4{display:block}
+  body[data-graphic-variant="4"] .hero-signature .variant-4 .sig-stage{margin:0;padding:0;border:none;background:none;overflow:visible}
+  body[data-graphic-variant="4"] .hero-signature .variant-4 .sig-bg{padding:18px 0 0;border:none;background:none;border-radius:0}
+  body[data-graphic-variant="4"] .hero-signature .variant-4 .scope-head{display:none}
+  body[data-graphic-variant="4"] .hero-signature .variant-4 text{display:none}
+  body[data-graphic-variant="4"] .hero-signature .variant-4 .scope{opacity:.18;mix-blend-mode:screen;filter:saturate(1.08) blur(.2px)}
+  body[data-graphic-variant="4"] .hero-signature .variant-4 .sig-bg::before{opacity:.55;filter:blur(14px)}
+  body[data-graphic-variant="4"] .hero::after{
+    content:"";position:absolute;inset:140px 0 auto; height:220px; pointer-events:none;
+    background:radial-gradient(circle at 22% 40%, rgba(240,169,58,.16), transparent 35%),
+               radial-gradient(circle at 80% 55%, rgba(86,194,214,.11), transparent 30%);
+    opacity:.85;filter:blur(10px);
+  }
 
   /* ---------- sections ---------- */
   .section{padding:96px 0 0}
@@ -262,7 +293,7 @@
   }
 </style>
 </head>
-<body>
+<body data-graphic-variant="4">
 
 <header class="topbar">
   <div class="wrap">
@@ -286,44 +317,47 @@
     <div class="wrap">
       <p class="eyebrow">Computer Science · Electrical Engineering</p>
       <h1>Patrick<br><span class="accent">Canady</span></h1>
-      <p class="thesis">Computer science and electrical engineering grad who likes taking things apart to see how they work, then <b>building my own</b>. That's taken me from FPGA designs to embedded hardware to a camera system that follows athletes around a mat.</p>
-
-      <!-- hero signature: logic-capture scope -->
-      <div class="sig-stage">
-        <div class="scope" aria-hidden="true">
-          <div class="scope-head">
-            <span>logic capture · ch0–ch2 · 100&nbsp;MHz</span>
-            <span class="live"><i></i>live</span>
-          </div>
-          <svg class="scope-svg" viewBox="0 0 1200 148" preserveAspectRatio="none" role="img">
-            <defs>
-              <g id="period">
-                <path d="M0 44 H20 V18 H40 V44 H60 V18 H80 V44 H100 V18 H120 V44 H140 V18 H160 V44 H180 V18 H200 V44 H220 V18 H240 V44 H260 V18 H280 V44 H300 V18 H320 V44 H340 V18 H360 V44 H380 V18 H400 V44 H420 V18 H440 V44 H460 V18 H480 V44 H500 V18 H520 V44 H540 V18 H560 V44 H580 V18 H600 V44" fill="none" stroke="#F0A93A" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
-                <path d="M0 90 H60 V64 H100 V90 H140 V64 H160 V90 H260 V64 H300 V90 H320 V64 H400 V90 H460 V64 H500 V90 H560 V64 H600 V90" fill="none" stroke="#56C2D6" stroke-opacity=".85" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
-                <path d="M0 136 H180 V110 H380 V136 H600" fill="none" stroke="#F0A93A" stroke-opacity=".62" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
-              </g>
-              <clipPath id="plot"><rect x="58" y="0" width="1142" height="148"/></clipPath>
-            </defs>
-            <text x="14" y="34" fill="#5C6573" font-family="JetBrains Mono, monospace" font-size="11">CLK</text>
-            <text x="14" y="80" fill="#5C6573" font-family="JetBrains Mono, monospace" font-size="11">DAT</text>
-            <text x="14" y="126" fill="#5C6573" font-family="JetBrains Mono, monospace" font-size="11">EN</text>
-            <line x1="52" y1="10" x2="52" y2="138" stroke="#232B35" stroke-width="1"/>
-            <g clip-path="url(#plot)">
-              <g class="trace">
-                <use href="#period" x="0"/>
-                <use href="#period" x="600"/>
-                <use href="#period" x="1200"/>
-              </g>
-            </g>
-          </svg>
-        </div>
-      </div>
+      <p class="thesis">Computer science and electrical engineering grad who likes working with teams to design, build, and ship high-value products. I like getting to the root of how things work, finding ways to improve them, and building the next version. That has taken me from FPGA designs to embedded hardware to a camera system that follows athletes around a mat, blending software and hardware to solve real problems.</p>
 
       <ul class="readout">
         <li><div class="k">GPA</div><div class="v"><em>3.92</em> / 4.00</div></li>
         <li><div class="k">Honors</div><div class="v">Summa <em>×2</em></div></li>
         <li><div class="k">Teaching</div><div class="v">~3 <em>yrs</em></div></li>
       </ul>
+
+      <div class="hero-signature">
+        <div class="variant-4" data-variant="4">
+          <div class="sig-stage sig-bg">
+            <div class="scope" aria-hidden="true">
+              <div class="scope-head">
+                <span>logic capture · background treatment</span>
+                <span class="live"><i></i>live</span>
+              </div>
+              <svg class="scope-svg" viewBox="0 0 1200 148" preserveAspectRatio="none" role="img">
+                <defs>
+                  <g id="period-bg">
+                    <path d="M0 44 H20 V18 H40 V44 H60 V18 H80 V44 H100 V18 H120 V44 H140 V18 H160 V44 H180 V18 H200 V44 H220 V18 H240 V44 H260 V18 H280 V44 H300 V18 H320 V44 H340 V18 H360 V44 H380 V18 H400 V44 H420 V18 H440 V44 H460 V18 H480 V44 H500 V18 H520 V44 H540 V18 H560 V44 H580 V18 H600 V44" fill="none" stroke="#F0A93A" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+                    <path d="M0 90 H60 V64 H100 V90 H140 V64 H160 V90 H260 V64 H300 V90 H320 V64 H400 V90 H460 V64 H500 V90 H560 V64 H600 V90" fill="none" stroke="#56C2D6" stroke-opacity=".85" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+                    <path d="M0 136 H180 V110 H380 V136 H600" fill="none" stroke="#F0A93A" stroke-opacity=".62" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+                  </g>
+                  <clipPath id="plot-bg"><rect x="58" y="0" width="1142" height="148"/></clipPath>
+                </defs>
+                <text x="14" y="34" fill="#5C6573" font-family="JetBrains Mono, monospace" font-size="11">CLK</text>
+                <text x="14" y="80" fill="#5C6573" font-family="JetBrains Mono, monospace" font-size="11">DAT</text>
+                <text x="14" y="126" fill="#5C6573" font-family="JetBrains Mono, monospace" font-size="11">EN</text>
+                <line x1="52" y1="10" x2="52" y2="138" stroke="#232B35" stroke-width="1"/>
+                <g clip-path="url(#plot-bg)">
+                  <g class="trace">
+                    <use href="#period-bg" x="0"/>
+                    <use href="#period-bg" x="600"/>
+                    <use href="#period-bg" x="1200"/>
+                  </g>
+                </g>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -379,10 +413,10 @@
           <span class="loc">Dept. of Computer Science · Tallahassee, FL</span>
         </div>
         <div>
-          <h3>Computer Science Teaching Assistant &amp; Tool Developer</h3>
+          <h3>Teaching Assistant &amp; Tool Developer</h3>
           <div class="role-sub">COP 3014 · COP 3363 · COP 3330 · CGS 2100</div>
           <ul>
-            <li>Spent nearly <b>3 years as a teaching assistant for 4 CS courses</b>, helping 100+ students per semester through weekly recitations on C++, data structures, algorithm analysis, and debugging.</li>
+            <li>Spent <b>3 academic years as a teaching assistant for 4 CS courses</b>, helping 100+ students per semester through weekly recitations on C++, data structures, algorithm analysis, and debugging.</li>
             <li>Architected a <b>production-grade Python autograding framework</b> from scratch — modular rubrics, libclang AST analysis, automated I/O testing, and LLM-assisted review — cutting per-assignment engineering time by ~80%.</li>
             <li>Scoped, designed, tested, and iterated on the tooling with no direct supervision, operating as <b>technical owner</b> of a system course staff rely on each semester.</li>
           </ul>
@@ -506,7 +540,7 @@
     </div>
     <div class="foot-bottom">
       <span>© 2026 Patrick Canady</span>
-      <span>Built by hand with plain HTML</span>
+      <!-- <span>Built by hand with plain HTML</span> -->
     </div>
   </div>
 </footer>
