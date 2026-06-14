@@ -104,34 +104,13 @@
   }
   .thesis b{color:var(--text);font-weight:600}
 
-  /* ---- hero signature: toggle + stage ---- */
-  .sig-toggle{
-    display:inline-flex;margin:46px 0 16px;border:1px solid var(--line);
-    border-radius:9px;overflow:hidden;background:var(--ink-2);max-width:100%;
-  }
-  .seg{
-    appearance:none;border:none;background:transparent;cursor:pointer;
-    font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;
-    color:var(--muted);padding:9px 16px;border-right:1px solid var(--line);
-    transition:color .2s,background .2s;white-space:nowrap;
-  }
-  .seg:last-child{border-right:none}
-  .seg:hover{color:var(--text)}
-  .seg[aria-selected="true"]{background:var(--amber-soft);color:var(--amber)}
-  @media(max-width:560px){.seg{padding:9px 12px;font-size:11px;letter-spacing:.06em}}
-
+  /* ---- hero signature: logic-capture scope ---- */
   .sig-stage{
-    border:1px solid var(--line);border-radius:12px;background:var(--ink-2);
-    min-height:236px;display:flex;align-items:center;justify-content:center;
-    overflow:hidden;position:relative;padding:24px;
+    margin:46px 0 0;border:1px solid var(--line);border-radius:12px;background:var(--ink-2);
+    overflow:hidden;position:relative;padding:22px 24px;
   }
-  @media(max-width:560px){.sig-stage{min-height:188px;padding:16px}}
-  .sig-variant{width:100%;display:flex;flex-direction:column;align-items:center;gap:16px}
-  .sig-variant[hidden]{display:none}
-  .sig-cap{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2)}
-  .sig-cap b{color:var(--muted);font-weight:500}
+  @media(max-width:560px){.sig-stage{padding:16px}}
 
-  /* variant 1: logic-capture scope */
   .scope{width:100%;position:relative}
   .scope-head{
     display:flex;align-items:center;justify-content:space-between;
@@ -146,52 +125,6 @@
   .scope .trace{animation:scrollx 14s linear infinite}
   @keyframes scrollx{from{transform:translateX(0)}to{transform:translateX(-600px)}}
   @media(max-width:560px){.scope-svg{height:108px}}
-
-  /* variant 2: systolic array */
-  .array-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-  .cell{
-    width:54px;height:54px;border-radius:10px;border:1px solid var(--line-2);
-    background:var(--surface);display:grid;place-items:center;position:relative;
-    animation:wf 2.6s ease-in-out infinite;
-  }
-  .cell::after{content:"";width:7px;height:7px;border-radius:2px;background:var(--muted-2);animation:wfdot 2.6s ease-in-out infinite}
-  @media(max-width:560px){.cell{width:44px;height:44px}}
-  @keyframes wf{
-    0%,68%,100%{border-color:var(--line-2);background:var(--surface);box-shadow:none}
-    14%{border-color:var(--amber);background:var(--amber-soft);box-shadow:0 0 16px rgba(240,169,58,.28)}
-  }
-  @keyframes wfdot{0%,68%,100%{background:var(--muted-2)}14%{background:var(--amber);box-shadow:0 0 8px var(--amber)}}
-
-  /* variant 3: pose tracking */
-  .pose-svg{display:block;width:100%;max-width:520px;height:188px}
-  @media(max-width:560px){.pose-svg{height:150px}}
-  .pose-fig{animation:sway 6s ease-in-out infinite}
-  .pose-fig line{stroke:var(--amber);stroke-width:2.4;stroke-linecap:round}
-  .pose-fig circle{fill:var(--amber)}
-  .pose-fig .kp-acc{fill:var(--cyan)}
-  .reticle{animation:track 6s ease-in-out infinite}
-  .reticle path{fill:none;stroke:var(--amber);stroke-width:2;opacity:.9}
-  .reticle .cross{stroke:var(--amber);stroke-width:1;opacity:.4}
-  @keyframes sway{0%,100%{transform:translateX(-16px)}50%{transform:translateX(16px)}}
-  @keyframes track{0%,100%{transform:translateX(-12px)}50%{transform:translateX(12px)}}
-
-  /* variant 4: silicon / IC */
-  .chip{
-    position:relative;width:300px;max-width:100%;padding:30px 34px;
-    border:1px solid var(--line-2);border-radius:12px;background:var(--surface);
-    background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
-    background-size:18px 18px;text-align:center;
-  }
-  .chip::before,.chip::after{
-    content:"";position:absolute;top:18px;bottom:18px;width:6px;
-    background:repeating-linear-gradient(var(--line-2) 0 7px,transparent 7px 15px);
-  }
-  .chip::before{left:-7px}.chip::after{right:-7px}
-  .chip .notch{position:absolute;top:9px;left:50%;transform:translateX(-50%);width:18px;height:9px;border:1px solid var(--line-2);border-top:none;border-radius:0 0 9px 9px;background:var(--ink-2)}
-  .chip .led{position:absolute;top:13px;right:14px;width:7px;height:7px;border-radius:50%;background:var(--amber);box-shadow:0 0 9px var(--amber);animation:blink 2.4s steps(1) infinite}
-  .chip .mark{font-family:var(--display);font-weight:700;font-size:27px;letter-spacing:.02em;color:var(--text);margin:6px 0 2px}
-  .chip .l2{font-family:var(--mono);font-size:12px;letter-spacing:.22em;color:var(--amber);text-transform:uppercase}
-  .chip .l3{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;color:var(--muted-2);text-transform:uppercase;margin-top:12px}
 
   /* readout strip (standalone) */
   .readout{
@@ -214,7 +147,7 @@
   .section{padding:96px 0 0}
   .section.last{padding-bottom:0}
   .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:42px}
-  .sec-head .pin{font-family:var(--mono);font-size:12px;color:var(--amber);letter-spacing:.08em}
+  .sec-head .pin{font-size:18px;line-height:1;color:var(--amber);align-self:center}
   .sec-head h2{
     font-family:var(--display);font-weight:700;font-size:clamp(26px,4vw,38px);
     letter-spacing:-.02em;margin:0;color:var(--text);
@@ -278,12 +211,8 @@
   .degree .d-name{font-size:15px;color:var(--text)}
   .degree .d-name span{display:block;font-family:var(--mono);font-size:11.5px;color:var(--amber);margin-top:3px;letter-spacing:.03em}
   .degree .d-when{font-family:var(--mono);font-size:12px;color:var(--muted-2);white-space:nowrap}
-  .honors{display:flex;flex-direction:column;gap:14px}
-  .honors .h-row{display:flex;align-items:baseline;gap:14px}
-  .honors .h-row .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--muted-2);text-transform:uppercase;width:96px;flex-shrink:0;padding-top:2px}
-  .honors .h-row .val{font-size:15px;color:#C3CAD3}
-  .honors .h-row .val em{font-style:normal;color:var(--text);font-weight:600}
   .course-block{margin-top:22px}
+  .course-block:first-child{margin-top:0}
   .course-block .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--muted-2);text-transform:uppercase;margin-bottom:9px}
   .course-block .list{font-size:14px;color:#AEB6C0;line-height:1.75}
 
@@ -359,104 +288,34 @@
       <h1>Patrick<br><span class="accent">Canady</span></h1>
       <p class="thesis">Computer science and electrical engineering grad who likes taking things apart to see how they work, then <b>building my own</b>. That's taken me from FPGA designs to embedded hardware to a camera system that follows athletes around a mat.</p>
 
-      <!-- hero signature: toggle between four variants -->
-      <div class="sig-toggle" role="tablist" aria-label="Hero visual">
-        <button class="seg" role="tab" id="tab-scope"   aria-controls="sig-scope"   data-sig="scope"   aria-selected="true">Scope</button>
-        <button class="seg" role="tab" id="tab-array"   aria-controls="sig-array"   data-sig="array"   aria-selected="false" tabindex="-1">Array</button>
-        <button class="seg" role="tab" id="tab-pose"    aria-controls="sig-pose"    data-sig="pose"    aria-selected="false" tabindex="-1">Pose</button>
-        <button class="seg" role="tab" id="tab-silicon" aria-controls="sig-silicon" data-sig="silicon" aria-selected="false" tabindex="-1">Silicon</button>
-      </div>
-
+      <!-- hero signature: logic-capture scope -->
       <div class="sig-stage">
-        <!-- 1 · logic-capture scope -->
-        <div class="sig-variant" id="sig-scope" role="tabpanel" aria-labelledby="tab-scope" data-sig="scope">
-          <div class="scope" aria-hidden="true">
-            <div class="scope-head">
-              <span>logic capture · ch0–ch2 · 100&nbsp;MHz</span>
-              <span class="live"><i></i>live</span>
-            </div>
-            <svg class="scope-svg" viewBox="0 0 1200 148" preserveAspectRatio="none" role="img">
-              <defs>
-                <g id="period">
-                  <path d="M0 44 H20 V18 H40 V44 H60 V18 H80 V44 H100 V18 H120 V44 H140 V18 H160 V44 H180 V18 H200 V44 H220 V18 H240 V44 H260 V18 H280 V44 H300 V18 H320 V44 H340 V18 H360 V44 H380 V18 H400 V44 H420 V18 H440 V44 H460 V18 H480 V44 H500 V18 H520 V44 H540 V18 H560 V44 H580 V18 H600 V44" fill="none" stroke="#F0A93A" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
-                  <path d="M0 90 H60 V64 H100 V90 H140 V64 H160 V90 H260 V64 H300 V90 H320 V64 H400 V90 H460 V64 H500 V90 H560 V64 H600 V90" fill="none" stroke="#56C2D6" stroke-opacity=".85" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
-                  <path d="M0 136 H180 V110 H380 V136 H600" fill="none" stroke="#F0A93A" stroke-opacity=".62" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
-                </g>
-                <clipPath id="plot"><rect x="58" y="0" width="1142" height="148"/></clipPath>
-              </defs>
-              <text x="14" y="34" fill="#5C6573" font-family="JetBrains Mono, monospace" font-size="11">CLK</text>
-              <text x="14" y="80" fill="#5C6573" font-family="JetBrains Mono, monospace" font-size="11">DAT</text>
-              <text x="14" y="126" fill="#5C6573" font-family="JetBrains Mono, monospace" font-size="11">EN</text>
-              <line x1="52" y1="10" x2="52" y2="138" stroke="#232B35" stroke-width="1"/>
-              <g clip-path="url(#plot)">
-                <g class="trace">
-                  <use href="#period" x="0"/>
-                  <use href="#period" x="600"/>
-                  <use href="#period" x="1200"/>
-                </g>
+        <div class="scope" aria-hidden="true">
+          <div class="scope-head">
+            <span>logic capture · ch0–ch2 · 100&nbsp;MHz</span>
+            <span class="live"><i></i>live</span>
+          </div>
+          <svg class="scope-svg" viewBox="0 0 1200 148" preserveAspectRatio="none" role="img">
+            <defs>
+              <g id="period">
+                <path d="M0 44 H20 V18 H40 V44 H60 V18 H80 V44 H100 V18 H120 V44 H140 V18 H160 V44 H180 V18 H200 V44 H220 V18 H240 V44 H260 V18 H280 V44 H300 V18 H320 V44 H340 V18 H360 V44 H380 V18 H400 V44 H420 V18 H440 V44 H460 V18 H480 V44 H500 V18 H520 V44 H540 V18 H560 V44 H580 V18 H600 V44" fill="none" stroke="#F0A93A" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+                <path d="M0 90 H60 V64 H100 V90 H140 V64 H160 V90 H260 V64 H300 V90 H320 V64 H400 V90 H460 V64 H500 V90 H560 V64 H600 V90" fill="none" stroke="#56C2D6" stroke-opacity=".85" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+                <path d="M0 136 H180 V110 H380 V136 H600" fill="none" stroke="#F0A93A" stroke-opacity=".62" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
               </g>
-            </svg>
-          </div>
-        </div>
-
-        <!-- 2 · systolic array -->
-        <div class="sig-variant" id="sig-array" role="tabpanel" aria-labelledby="tab-array" data-sig="array" hidden>
-          <div class="array-grid" aria-hidden="true">
-            <div class="cell" style="animation-delay:0s"></div>
-            <div class="cell" style="animation-delay:.22s"></div>
-            <div class="cell" style="animation-delay:.44s"></div>
-            <div class="cell" style="animation-delay:.22s"></div>
-            <div class="cell" style="animation-delay:.44s"></div>
-            <div class="cell" style="animation-delay:.66s"></div>
-            <div class="cell" style="animation-delay:.44s"></div>
-            <div class="cell" style="animation-delay:.66s"></div>
-            <div class="cell" style="animation-delay:.88s"></div>
-          </div>
-          <div class="sig-cap"><b>3×3 systolic MAC</b> · wavefront sweep</div>
-        </div>
-
-        <!-- 3 · pose tracking -->
-        <div class="sig-variant" id="sig-pose" role="tabpanel" aria-labelledby="tab-pose" data-sig="pose" hidden>
-          <svg class="pose-svg" viewBox="0 0 1200 240" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
-            <g class="reticle">
-              <path d="M520 30 H545 M520 30 V55 M680 30 H655 M680 30 V55 M520 250 H545 M520 250 V225 M680 250 H655 M680 250 V225"/>
-              <line class="cross" x1="600" y1="120" x2="600" y2="160"/>
-              <line class="cross" x1="580" y1="140" x2="620" y2="140"/>
-            </g>
-            <g class="pose-fig">
-              <line x1="600" y1="48" x2="600" y2="82"/>
-              <line x1="558" y1="82" x2="642" y2="82"/>
-              <line x1="600" y1="82" x2="600" y2="152"/>
-              <line x1="576" y1="152" x2="624" y2="152"/>
-              <line x1="558" y1="82" x2="540" y2="122"/>
-              <line x1="540" y1="122" x2="548" y2="162"/>
-              <line x1="642" y1="82" x2="660" y2="122"/>
-              <line x1="660" y1="122" x2="652" y2="162"/>
-              <line x1="576" y1="152" x2="572" y2="198"/>
-              <line x1="572" y1="198" x2="570" y2="238"/>
-              <line x1="624" y1="152" x2="628" y2="198"/>
-              <line x1="628" y1="198" x2="630" y2="238"/>
-              <circle cx="600" cy="40" r="9"/>
-              <circle cx="558" cy="82" r="4.5"/><circle cx="642" cy="82" r="4.5"/>
-              <circle cx="540" cy="122" r="4.5"/><circle cx="660" cy="122" r="4.5"/>
-              <circle cx="548" cy="162" r="4.5" class="kp-acc"/><circle cx="652" cy="162" r="4.5" class="kp-acc"/>
-              <circle cx="576" cy="152" r="4.5"/><circle cx="624" cy="152" r="4.5"/>
-              <circle cx="572" cy="198" r="4.5"/><circle cx="628" cy="198" r="4.5"/>
-              <circle cx="570" cy="238" r="4.5"/><circle cx="630" cy="238" r="4.5"/>
+              <clipPath id="plot"><rect x="58" y="0" width="1142" height="148"/></clipPath>
+            </defs>
+            <text x="14" y="34" fill="#5C6573" font-family="JetBrains Mono, monospace" font-size="11">CLK</text>
+            <text x="14" y="80" fill="#5C6573" font-family="JetBrains Mono, monospace" font-size="11">DAT</text>
+            <text x="14" y="126" fill="#5C6573" font-family="JetBrains Mono, monospace" font-size="11">EN</text>
+            <line x1="52" y1="10" x2="52" y2="138" stroke="#232B35" stroke-width="1"/>
+            <g clip-path="url(#plot)">
+              <g class="trace">
+                <use href="#period" x="0"/>
+                <use href="#period" x="600"/>
+                <use href="#period" x="1200"/>
+              </g>
             </g>
           </svg>
-          <div class="sig-cap"><b>pose tracking</b> · keep subject centered</div>
-        </div>
-
-        <!-- 4 · silicon / IC -->
-        <div class="sig-variant" id="sig-silicon" role="tabpanel" aria-labelledby="tab-silicon" data-sig="silicon" hidden>
-          <div class="chip" aria-hidden="true">
-            <span class="notch"></span>
-            <span class="led"></span>
-            <div class="mark">P. CANADY</div>
-            <div class="l2">CS · EE dual-core</div>
-            <div class="l3">Tallahassee · 2026</div>
-          </div>
         </div>
       </div>
 
@@ -471,7 +330,7 @@
   <!-- WORK -->
   <section class="section" id="work" aria-label="Selected work">
     <div class="wrap">
-      <div class="sec-head reveal"><span class="pin">▪</span><h2>Selected work</h2><span class="rule"></span></div>
+      <div class="sec-head reveal"><span class="pin">•</span><h2>Selected work</h2><span class="rule"></span></div>
       <div class="projects">
 
         <article class="card reveal">
@@ -511,7 +370,7 @@
   <!-- EXPERIENCE -->
   <section class="section" id="experience" aria-label="Experience">
     <div class="wrap">
-      <div class="sec-head reveal"><span class="pin">▪</span><h2>Experience</h2><span class="rule"></span></div>
+      <div class="sec-head reveal"><span class="pin">•</span><h2>Experience</h2><span class="rule"></span></div>
 
       <div class="entry reveal">
         <div class="when">
@@ -552,7 +411,7 @@
   <!-- EDUCATION -->
   <section class="section" id="education" aria-label="Education">
     <div class="wrap">
-      <div class="sec-head reveal"><span class="pin">▪</span><h2>Education</h2><span class="rule"></span></div>
+      <div class="sec-head reveal"><span class="pin">•</span><h2>Education</h2><span class="rule"></span></div>
       <div class="edu-grid">
         <div class="panel reveal">
           <h3>Dual-Degree Program</h3>
@@ -571,8 +430,9 @@
           </div>
         </div>
         <div class="panel reveal">
-          <div class="honors">
-            <div class="h-row"><div class="lbl">Honors</div><div class="val"><em>President's List ×4</em> · Dean's List ×5, across all undergraduate semesters</div></div>
+          <div class="course-block">
+            <div class="lbl">Honors</div>
+            <div class="list">President's List ×4 and Dean's List ×5, across all undergraduate semesters</div>
           </div>
           <div class="course-block">
             <div class="lbl">CS Coursework</div>
@@ -590,7 +450,7 @@
   <!-- STACK -->
   <section class="section" id="stack" aria-label="Technical stack">
     <div class="wrap">
-      <div class="sec-head reveal"><span class="pin">▪</span><h2>Stack</h2><span class="rule"></span></div>
+      <div class="sec-head reveal"><span class="pin">•</span><h2>Stack</h2><span class="rule"></span></div>
       <div class="stack">
         <div class="panel reveal">
           <h4>Languages</h4>
@@ -662,30 +522,6 @@
       });
     },{threshold:0.12, rootMargin:'0px 0px -40px 0px'});
     els.forEach(function(el){ io.observe(el); });
-  })();
-
-  // hero signature toggle
-  (function(){
-    var tabs = Array.prototype.slice.call(document.querySelectorAll('.seg'));
-    var panels = document.querySelectorAll('.sig-variant');
-    function select(name, focus){
-      tabs.forEach(function(t){
-        var on = t.dataset.sig === name;
-        t.setAttribute('aria-selected', on ? 'true' : 'false');
-        t.tabIndex = on ? 0 : -1;
-        if(on && focus) t.focus();
-      });
-      panels.forEach(function(p){ p.hidden = (p.dataset.sig !== name); });
-    }
-    tabs.forEach(function(t, i){
-      t.addEventListener('click', function(){ select(t.dataset.sig, false); });
-      t.addEventListener('keydown', function(e){
-        var d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
-        if(!d) return;
-        e.preventDefault();
-        select(tabs[(i + d + tabs.length) % tabs.length].dataset.sig, true);
-      });
-    });
   })();
 </script>
 </body>
