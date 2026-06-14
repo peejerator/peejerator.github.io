@@ -143,10 +143,6 @@
   .scope-svg{display:block;width:100%;height:130px;
     -webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);
             mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);}
-  .scope-svg .sig{fill:none;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round}
-  .scope-svg .clk{stroke:var(--amber)}
-  .scope-svg .dat{stroke:var(--cyan);opacity:.85}
-  .scope-svg .en{stroke:var(--amber);opacity:.62}
   .scope .trace{animation:scrollx 14s linear infinite}
   @keyframes scrollx{from{transform:translateX(0)}to{transform:translateX(-600px)}}
   @media(max-width:560px){.scope-svg{height:108px}}
@@ -382,9 +378,9 @@
             <svg class="scope-svg" viewBox="0 0 1200 148" preserveAspectRatio="none" role="img">
               <defs>
                 <g id="period">
-                  <path class="sig clk" d="M0 44 H20 V18 H40 V44 H60 V18 H80 V44 H100 V18 H120 V44 H140 V18 H160 V44 H180 V18 H200 V44 H220 V18 H240 V44 H260 V18 H280 V44 H300 V18 H320 V44 H340 V18 H360 V44 H380 V18 H400 V44 H420 V18 H440 V44 H460 V18 H480 V44 H500 V18 H520 V44 H540 V18 H560 V44 H580 V18 H600 V44"/>
-                  <path class="sig dat" d="M0 90 H60 V64 H100 V90 H140 V64 H160 V90 H260 V64 H300 V90 H320 V64 H400 V90 H460 V64 H500 V90 H560 V64 H600 V90"/>
-                  <path class="sig en"  d="M0 136 H180 V110 H380 V136 H600"/>
+                  <path d="M0 44 H20 V18 H40 V44 H60 V18 H80 V44 H100 V18 H120 V44 H140 V18 H160 V44 H180 V18 H200 V44 H220 V18 H240 V44 H260 V18 H280 V44 H300 V18 H320 V44 H340 V18 H360 V44 H380 V18 H400 V44 H420 V18 H440 V44 H460 V18 H480 V44 H500 V18 H520 V44 H540 V18 H560 V44 H580 V18 H600 V44" fill="none" stroke="#F0A93A" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+                  <path d="M0 90 H60 V64 H100 V90 H140 V64 H160 V90 H260 V64 H300 V90 H320 V64 H400 V90 H460 V64 H500 V90 H560 V64 H600 V90" fill="none" stroke="#56C2D6" stroke-opacity=".85" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+                  <path d="M0 136 H180 V110 H380 V136 H600" fill="none" stroke="#F0A93A" stroke-opacity=".62" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
                 </g>
               </defs>
               <text x="14" y="34" fill="#5C6573" font-family="JetBrains Mono, monospace" font-size="11">CLK</text>
