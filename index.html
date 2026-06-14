@@ -141,8 +141,8 @@
   .scope-head .live{display:flex;align-items:center;gap:8px;color:var(--amber)}
   .scope-head .live i{width:6px;height:6px;border-radius:50%;background:var(--amber);box-shadow:0 0 8px var(--amber);animation:blink 1.8s steps(1) infinite}
   .scope-svg{display:block;width:100%;height:130px;
-    -webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);
-            mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);}
+    -webkit-mask-image:linear-gradient(90deg,#000 0,#000 92%,transparent);
+            mask-image:linear-gradient(90deg,#000 0,#000 92%,transparent);}
   .scope .trace{animation:scrollx 14s linear infinite}
   @keyframes scrollx{from{transform:translateX(0)}to{transform:translateX(-600px)}}
   @media(max-width:560px){.scope-svg{height:108px}}
@@ -357,7 +357,7 @@
     <div class="wrap">
       <p class="eyebrow">Computer Science · Electrical Engineering</p>
       <h1>Patrick<br><span class="accent">Canady</span></h1>
-      <p class="thesis">I build systems at the boundary of silicon and software — from <b>FPGA fabric and embedded firmware</b> to the <b>vision pipelines and developer tools</b> that run on top. Dual-degree engineer, comfortable owning a system from concept to deployment.</p>
+      <p class="thesis">Computer science and electrical engineering grad who likes taking things apart to see how they work, then <b>building my own</b>. That's taken me from FPGA designs to embedded hardware to a camera system that follows athletes around a mat.</p>
 
       <!-- hero signature: toggle between four variants -->
       <div class="sig-toggle" role="tablist" aria-label="Hero visual">
@@ -382,14 +382,18 @@
                   <path d="M0 90 H60 V64 H100 V90 H140 V64 H160 V90 H260 V64 H300 V90 H320 V64 H400 V90 H460 V64 H500 V90 H560 V64 H600 V90" fill="none" stroke="#56C2D6" stroke-opacity=".85" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
                   <path d="M0 136 H180 V110 H380 V136 H600" fill="none" stroke="#F0A93A" stroke-opacity=".62" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
                 </g>
+                <clipPath id="plot"><rect x="58" y="0" width="1142" height="148"/></clipPath>
               </defs>
               <text x="14" y="34" fill="#5C6573" font-family="JetBrains Mono, monospace" font-size="11">CLK</text>
               <text x="14" y="80" fill="#5C6573" font-family="JetBrains Mono, monospace" font-size="11">DAT</text>
               <text x="14" y="126" fill="#5C6573" font-family="JetBrains Mono, monospace" font-size="11">EN</text>
-              <g class="trace">
-                <use href="#period" x="0"/>
-                <use href="#period" x="600"/>
-                <use href="#period" x="1200"/>
+              <line x1="52" y1="10" x2="52" y2="138" stroke="#232B35" stroke-width="1"/>
+              <g clip-path="url(#plot)">
+                <g class="trace">
+                  <use href="#period" x="0"/>
+                  <use href="#period" x="600"/>
+                  <use href="#period" x="1200"/>
+                </g>
               </g>
             </svg>
           </div>
@@ -618,8 +622,8 @@
   <div class="wrap">
     <div class="foot-grid">
       <div>
-        <p class="big">Let's build<br>something <a href="mailto:patrick.canady@ifoundry.com">deliberate.</a></p>
-        <p class="sub">Open to engineering roles spanning hardware, FPGA/RTL, embedded, and systems software.</p>
+        <p class="big">Questions, ideas,<br>or just <a href="mailto:patrick.canady@ifoundry.com">want to chat?</a></p>
+        <p class="sub">Email me, I'm around.</p>
       </div>
       <nav class="contacts" aria-label="Contact links">
         <a href="mailto:patrick.canady@ifoundry.com">
@@ -642,7 +646,7 @@
     </div>
     <div class="foot-bottom">
       <span>© 2026 Patrick Canady</span>
-      <span>CS · EE — built with hand-written HTML</span>
+      <span>Built by hand with plain HTML</span>
     </div>
   </div>
 </footer>
