@@ -637,16 +637,19 @@
       if(ground){
         var gr = ground.getBoundingClientRect();
         var groundCenter = gr.top + window.scrollY + gr.height / 2 - mainTop;
-        maxY = Math.min(maxY, groundCenter - pulse.offsetHeight / 2);
+        maxY = groundCenter;
       }
 
-      var y = Math.max(0, Math.min(maxY, center - mainTop));
+      var maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      var atBottom = window.scrollY >= maxScroll - 1;
+      var y = atBottom ? maxY : Math.max(0, Math.min(maxY, center - mainTop));
       pulse.style.top = y + 'px';
       pulse.style.opacity = '1';
+      var pulsePageY = y + mainTop;
       for(var i=0;i<nodes.length;i++){
         var r = nodes[i].getBoundingClientRect();
         var cy = r.top + window.scrollY + r.height/2;
-        nodes[i].classList.toggle('lit', Math.abs(cy - center) < 35);
+        nodes[i].classList.toggle('lit', Math.abs(cy - pulsePageY) < 35);
       }
     }
     function onScroll(){ if(!ticking){ ticking = true; requestAnimationFrame(update); } }
