@@ -174,6 +174,62 @@
     opacity:.85;filter:blur(10px);
   }
 
+  /* ---------- circuit spine ---------- */
+  :root{ --gutter:64px; --rail:#2B3A47; }
+  @media(max-width:760px){ :root{ --gutter:42px } }
+  @media(max-width:480px){ :root{ --gutter:28px } }
+
+  main{ position:relative; --col-left: max(28px, calc((100% - var(--maxw))/2 + 28px)); }
+  .hero, .section{ position:relative; --col-left: max(28px, calc((100% - var(--maxw))/2 + 28px)); }
+
+  /* indent content so the rail has its own column */
+  .hero > .wrap, .section > .wrap{ padding-left: calc(28px + var(--gutter)); }
+
+  /* the rail itself */
+  .hero::before, .section::before{
+    content:""; position:absolute; top:0; bottom:0;
+    left: calc(var(--col-left) + var(--gutter)/2 - 1px);
+    width:2px; background:var(--rail); z-index:0;
+  }
+  .hero::before{ background:linear-gradient(180deg, transparent, var(--rail) 96px); }
+
+  /* section heading bullet becomes a junction node on the rail */
+  /* schematic component sits at each heading as its node on the rail */
+  .sec-head{ position:relative; }
+  .sec-head .node{
+    position:absolute; left: calc(-1 * var(--gutter)/2); top:50%;
+    transform:translate(-50%,-50%); z-index:2; line-height:0;
+  }
+  .sec-head .node svg{ position:relative; z-index:1; display:block; height:38px; width:auto; transition:filter .25s; }
+  @media(max-width:480px){ .sec-head .node svg{ height:30px } }
+
+  /* feathered backdrop hides the rail behind a component with no hard edge */
+  .sec-head .node::before, .comp::before{
+    content:""; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+    width:58px; height:68px; z-index:0;
+    background:radial-gradient(50% 50% at 50% 50%, var(--ink) 0, var(--ink) 42%, rgba(12,15,20,0) 82%);
+  }
+
+  /* lit state: glow follows the symbol shape, never a box */
+  .sec-head .node.lit svg, .comp.lit svg{ filter:drop-shadow(0 0 6px rgba(240,169,58,.8)) brightness(2.0); }
+
+  /* ground terminates the rail */
+  .comp{
+    position:absolute; z-index:2; bottom:-8px;
+    left: calc(var(--col-left) + var(--gutter)/2);
+    transform:translateX(-50%);
+  }
+  .comp svg{ position:relative; z-index:1; display:block; transition:filter .25s; }
+  @media(max-width:480px){ .comp{ transform:translateX(-50%) scale(.82) } }
+
+  /* travelling current pulse */
+  .pulse{
+    position:absolute; z-index:1; width:9px; height:9px; border-radius:50%;
+    left: calc(var(--col-left) + var(--gutter)/2 - 4px);
+    background:var(--amber); box-shadow:0 0 12px 3px rgba(240,169,58,.75);
+    top:0; opacity:0; pointer-events:none; will-change:top;
+  }
+
   /* ---------- sections ---------- */
   .section{padding:96px 0 0}
   .section.last{padding-bottom:0}
@@ -312,6 +368,7 @@
 </header>
 
 <main id="top">
+  <div class="pulse" aria-hidden="true"></div>
   <!-- HERO -->
   <section class="hero" aria-label="Introduction">
     <div class="wrap">
@@ -364,7 +421,7 @@
   <!-- WORK -->
   <section class="section" id="work" aria-label="Selected work">
     <div class="wrap">
-      <div class="sec-head reveal"><span class="pin">•</span><h2>Selected work</h2><span class="rule"></span></div>
+      <div class="sec-head reveal"><span class="node comp-resistor" title="resistor" aria-hidden="true"><svg viewBox="0 0 46 72" fill="none"><path d="M23 2 V20 L31 24 L15 30 L31 36 L15 42 L31 48 L15 54 L23 58 V70" stroke="#F0A93A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><h2>Selected work</h2><span class="rule"></span></div>
       <div class="projects">
 
         <article class="card reveal">
@@ -404,7 +461,7 @@
   <!-- EXPERIENCE -->
   <section class="section" id="experience" aria-label="Experience">
     <div class="wrap">
-      <div class="sec-head reveal"><span class="pin">•</span><h2>Experience</h2><span class="rule"></span></div>
+      <div class="sec-head reveal"><span class="node comp-capacitor" title="capacitor" aria-hidden="true"><svg viewBox="0 0 46 60" fill="none" stroke="#F0A93A" stroke-width="2.4" stroke-linecap="round"><path d="M23 2 V25"/><path d="M9 25 H37"/><path d="M9 35 H37"/><path d="M23 35 V58"/></svg></span><h2>Experience</h2><span class="rule"></span></div>
 
       <div class="entry reveal">
         <div class="when">
@@ -445,7 +502,7 @@
   <!-- EDUCATION -->
   <section class="section" id="education" aria-label="Education">
     <div class="wrap">
-      <div class="sec-head reveal"><span class="pin">•</span><h2>Education</h2><span class="rule"></span></div>
+      <div class="sec-head reveal"><span class="node comp-inductor" title="inductor" aria-hidden="true"><svg viewBox="0 0 46 72" fill="none"><path d="M23 2 V16 a6 6 0 0 1 0 12 a6 6 0 0 1 0 12 a6 6 0 0 1 0 12 a6 6 0 0 1 0 12 V70" stroke="#F0A93A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><h2>Education</h2><span class="rule"></span></div>
       <div class="edu-grid">
         <div class="panel reveal">
           <h3>Dual-Degree Program</h3>
@@ -484,7 +541,7 @@
   <!-- STACK -->
   <section class="section" id="stack" aria-label="Technical stack">
     <div class="wrap">
-      <div class="sec-head reveal"><span class="pin">•</span><h2>Stack</h2><span class="rule"></span></div>
+      <div class="sec-head reveal"><span class="node comp-ic" title="integrated circuit" aria-hidden="true"><svg viewBox="0 0 56 66" fill="none" stroke="#F0A93A"><path d="M28 2 V14" stroke-width="2.4" stroke-linecap="round"/><rect x="14" y="14" width="28" height="36" rx="3" stroke-width="2.4"/><path d="M28 50 V64" stroke-width="2.4" stroke-linecap="round"/><path d="M14 23 H7 M14 32 H7 M14 41 H7 M42 23 H49 M42 32 H49 M42 41 H49" stroke-width="2" stroke-linecap="round"/><circle cx="20" cy="20" r="1.8" fill="#F0A93A" stroke="none"/></svg></span><h2>Stack</h2><span class="rule"></span></div>
       <div class="stack">
         <div class="panel reveal">
           <h4>Languages</h4>
@@ -507,6 +564,9 @@
           <div class="items"><span>Team leadership &amp; cross-functional collaboration</span><span>Technical mentorship, coaching, and curriculum design</span><span>Stakeholder communication &amp; technical writing</span><span>Agile / stand-up workflows and self-directed project management</span></div>
         </div>
       </div>
+    </div>
+    <div class="comp comp-ground" aria-hidden="true" title="ground">
+      <svg width="40" height="44" viewBox="0 0 46 50" fill="none" stroke="#F0A93A" stroke-width="2.4" stroke-linecap="round"><path d="M23 2 V22"/><path d="M9 22 H37"/><path d="M14 30 H32"/><path d="M18 38 H28"/></svg>
     </div>
   </section>
 </main>
@@ -540,7 +600,6 @@
     </div>
     <div class="foot-bottom">
       <span>© 2026 Patrick Canady</span>
-      <!-- <span>Built by hand with plain HTML</span> -->
     </div>
   </div>
 </footer>
@@ -556,6 +615,45 @@
       });
     },{threshold:0.12, rootMargin:'0px 0px -40px 0px'});
     els.forEach(function(el){ io.observe(el); });
+  })();
+
+  // circuit spine: travelling current pulse + light components as it passes
+  (function(){
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var main = document.querySelector('main');
+    var pulse = document.querySelector('.pulse');
+    if(!main || !pulse) return;
+    var nodes = Array.prototype.slice.call(document.querySelectorAll('.comp, .sec-head .node'));
+    var ground = document.querySelector('.comp-ground');
+    var ticking = false;
+
+    function update(){
+      ticking = false;
+      var mainTop = main.getBoundingClientRect().top + window.scrollY;
+      var mainH = main.offsetHeight;
+      var center = window.scrollY + window.innerHeight * 0.5;
+      var maxY = mainH;
+
+      if(ground){
+        var gr = ground.getBoundingClientRect();
+        var groundCenter = gr.top + window.scrollY + gr.height / 2 - mainTop;
+        maxY = Math.min(maxY, groundCenter - pulse.offsetHeight / 2);
+      }
+
+      var y = Math.max(0, Math.min(maxY, center - mainTop));
+      pulse.style.top = y + 'px';
+      pulse.style.opacity = '1';
+      for(var i=0;i<nodes.length;i++){
+        var r = nodes[i].getBoundingClientRect();
+        var cy = r.top + window.scrollY + r.height/2;
+        nodes[i].classList.toggle('lit', Math.abs(cy - center) < 35);
+      }
+    }
+    function onScroll(){ if(!ticking){ ticking = true; requestAnimationFrame(update); } }
+
+    window.addEventListener('scroll', onScroll, {passive:true});
+    window.addEventListener('resize', onScroll);
+    update();
   })();
 </script>
 </body>
