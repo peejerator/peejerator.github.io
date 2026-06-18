@@ -189,9 +189,33 @@
   .hero::before, .section::before{
     content:""; position:absolute; top:0; bottom:0;
     left: calc(var(--col-left) + var(--gutter)/2 - 1px);
-    width:2px; background:var(--rail); z-index:0;
+    width:2px; z-index:0;
+  }
+  /* each section's rail has a transparent gap where its component sits (gap bounds set by JS) */
+  .section::before{
+    background:linear-gradient(to bottom,
+      var(--rail) 0, var(--rail) var(--ga,100%),
+      transparent var(--ga,100%), transparent var(--gb,100%),
+      var(--rail) var(--gb,100%), var(--rail) var(--end,100%),
+      transparent var(--end,100%));
   }
   .hero::before{ background:linear-gradient(180deg, transparent, var(--rail) 96px); }
+
+  /* the name is the power source: the letters glow, then drain right-to-left as the dot pulls the charge out */
+  body{ --edgepx:3000px; }
+  .hero h1{ position:relative; }
+  .hero h1 .ghost{
+    position:absolute; left:-60px; top:-46px; z-index:-1; pointer-events:none;
+    padding:46px 60px; color:transparent;
+    text-shadow:0 0 6px rgba(240,169,58,.95), 0 0 16px rgba(240,169,58,.6), 0 0 32px rgba(240,169,58,.34);
+    -webkit-mask-image:linear-gradient(to right, #000 0, #000 calc(var(--edgepx) - 40px), transparent var(--edgepx));
+            mask-image:linear-gradient(to right, #000 0, #000 calc(var(--edgepx) - 40px), transparent var(--edgepx));
+  }
+
+  /* bent lead drawn from the name into the rail (path built by JS) */
+  .source-lead{ position:absolute; inset:0; width:100%; height:100%; z-index:0; pointer-events:none; overflow:visible; }
+  .source-lead path{ fill:none; stroke:var(--rail); stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  .js-spine .hero::before{ display:none; }
 
   /* section heading bullet becomes a junction node on the rail */
   /* schematic component sits at each heading as its node on the rail */
@@ -202,13 +226,6 @@
   }
   .sec-head .node svg{ position:relative; z-index:1; display:block; height:38px; width:auto; transition:filter .25s; }
   @media(max-width:480px){ .sec-head .node svg{ height:30px } }
-
-  /* feathered backdrop hides the rail behind a component with no hard edge */
-  .sec-head .node::before, .comp::before{
-    content:""; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
-    width:58px; height:68px; z-index:0;
-    background:radial-gradient(50% 50% at 50% 50%, var(--ink) 0, var(--ink) 42%, rgba(12,15,20,0) 82%);
-  }
 
   /* lit state: glow follows the symbol shape, never a box */
   .sec-head .node.lit svg, .comp.lit svg{ filter:drop-shadow(0 0 6px rgba(240,169,58,.8)) brightness(2.0); }
@@ -227,7 +244,7 @@
     position:absolute; z-index:1; width:9px; height:9px; border-radius:50%;
     left: calc(var(--col-left) + var(--gutter)/2 - 4px);
     background:var(--amber); box-shadow:0 0 12px 3px rgba(240,169,58,.75);
-    top:0; opacity:0; pointer-events:none; will-change:top;
+    top:0; opacity:0; pointer-events:none; will-change:left,top; transition:opacity .25s linear;
   }
 
   /* ---------- sections ---------- */
@@ -338,6 +355,8 @@
   /* reveal */
   .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
   .reveal.in{opacity:1;transform:none}
+  /* section headings carry a rail component, so they must not slide (would misalign the rail gap) */
+  .sec-head.reveal{transform:none}
 
   /* focus */
   a:focus-visible,button:focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:3px}
@@ -373,7 +392,7 @@
   <section class="hero" aria-label="Introduction">
     <div class="wrap">
       <p class="eyebrow">Computer Science · Electrical Engineering</p>
-      <h1>Patrick<br><span class="accent">Canady</span></h1>
+      <h1><span class="ghost" aria-hidden="true">Patrick<br>Canady</span>Patrick<br><span class="accent">Canady</span></h1>
       <p class="thesis">Computer science and electrical engineering grad who likes working with teams to design, build, and ship high-value products. I like getting to the root of how things work, finding ways to improve them, and building the next version. That has taken me from FPGA designs to embedded hardware to a camera system that follows athletes around a mat, blending software and hardware to solve real problems.</p>
 
       <ul class="readout">
@@ -617,46 +636,134 @@
     els.forEach(function(el){ io.observe(el); });
   })();
 
-  // circuit spine: travelling current pulse + light components as it passes
+  // circuit spine: the name powers the rail; the pulse flows out of the name to ground
   (function(){
     if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     var main = document.querySelector('main');
+    var hero = document.querySelector('.hero');
+    var h1 = hero && hero.querySelector('h1');
     var pulse = document.querySelector('.pulse');
-    if(!main || !pulse) return;
+    if(!main || !hero || !h1 || !pulse) return;
+    var railNode = document.querySelector('#work .sec-head .node');
+    if(!railNode) return;
+    var ghost = h1.querySelector('.ghost');
+    document.body.classList.add('js-spine');
+
     var nodes = Array.prototype.slice.call(document.querySelectorAll('.comp, .sec-head .node'));
     var ground = document.querySelector('.comp-ground');
-    var ticking = false;
+    var headNodes = Array.prototype.slice.call(document.querySelectorAll('.section .sec-head .node'));
+
+    function setGaps(){
+      headNodes.forEach(function(n){
+        var sec = n.closest('.section'); if(!sec) return;
+        var nr = n.getBoundingClientRect(), sr = sec.getBoundingClientRect();
+        var center = (nr.top - sr.top) + nr.height/2;
+        var gh = Math.max(12, nr.height/2 - 1);
+        sec.style.setProperty('--ga', (center - gh).toFixed(1) + 'px');
+        sec.style.setProperty('--gb', (center + gh).toFixed(1) + 'px');
+      });
+      if(ground){
+        var gsec = ground.closest('.section');
+        if(gsec){
+          var gr = ground.getBoundingClientRect(), gsr = gsec.getBoundingClientRect();
+          gsec.style.setProperty('--end', ((gr.top - gsr.top) + 4).toFixed(1) + 'px'); // rail stops at the ground's top
+        }
+      }
+    }
+
+    // build the bent source lead
+    var NS = 'http://www.w3.org/2000/svg';
+    var svg = document.createElementNS(NS,'svg');
+    svg.setAttribute('class','source-lead');
+    var path = document.createElementNS(NS,'path');
+    svg.appendChild(path);
+    hero.insertBefore(svg, hero.firstChild);
+
+    var geo = null, ticking = false;
+
+    function layout(){
+      var sx = window.scrollX, sy = window.scrollY;
+      var hr = hero.getBoundingClientRect();
+      var ox = hr.left + sx, oy = hr.top + sy, H = hr.height;
+      var rr = railNode.getBoundingClientRect();
+      var railXDoc = rr.left + sx + rr.width/2;
+      var nr = h1.getBoundingClientRect();
+      var attachXDoc = nr.left + sx + 2;
+      var attachYDoc = nr.top + sy + nr.height * 0.72;
+      var railX = railXDoc - ox, attachX = attachXDoc - ox, attachY = attachYDoc - oy;
+      var r = 14, corner = railX + r;
+      path.setAttribute('d',
+        'M '+attachX+' '+attachY+' H '+corner+
+        ' Q '+railX+' '+attachY+' '+railX+' '+(attachY+r)+
+        ' V '+H);
+      var mr = main.getBoundingClientRect();
+      geo = { mainLeft: mr.left+sx, mainTop: mr.top+sy,
+              ox: ox, oy: oy, heroBottomDocY: oy + H, pathLen: path.getTotalLength(),
+              attachXDoc: attachXDoc, attachYDoc: attachYDoc,
+              railXDoc: railXDoc,
+              textW: ghost ? Math.max(40, ghost.offsetWidth - 120) : 300 };
+      setGaps();
+    }
 
     function update(){
       ticking = false;
-      var mainTop = main.getBoundingClientRect().top + window.scrollY;
-      var mainH = main.offsetHeight;
-      var center = window.scrollY + window.innerHeight * 0.5;
-      var maxY = mainH;
-
-      if(ground){
-        var gr = ground.getBoundingClientRect();
-        var groundCenter = gr.top + window.scrollY + gr.height / 2 - mainTop;
-        maxY = groundCenter;
-      }
-
+      if(!geo) layout();
+      setGaps();   // keep rail gaps aligned to components as headings reveal / reflow
+      var groundDocY;
+      if(ground){ var g = ground.getBoundingClientRect(); groundDocY = g.top + window.scrollY + g.height/2; }
+      else { groundDocY = geo.mainTop + main.offsetHeight; }
       var maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-      var atBottom = window.scrollY >= maxScroll - 1;
-      var y = atBottom ? maxY : Math.max(0, Math.min(maxY, center - mainTop));
-      pulse.style.top = y + 'px';
-      pulse.style.opacity = '1';
-      var pulsePageY = y + mainTop;
-      for(var i=0;i<nodes.length;i++){
-        var r = nodes[i].getBoundingClientRect();
-        var cy = r.top + window.scrollY + r.height/2;
-        nodes[i].classList.toggle('lit', Math.abs(cy - pulsePageY) < 35);
+      var sY = window.scrollY;
+      var atBottom = sY >= maxScroll - 1;
+
+      // phase 1: drain the name's glow right-to-left while the name is still on screen
+      var drainEnd = Math.max(120, Math.min(maxScroll * 0.5, geo.attachYDoc - 160));
+      var drain = Math.min(1, Math.max(0, sY / drainEnd));
+      document.body.style.setProperty('--edgepx', (60 + (1 - drain) * (geo.textW + 60)).toFixed(1) + 'px');
+
+      if(sY < drainEnd){
+        // still draining: the dot hasn't formed yet
+        pulse.style.opacity = '0';
+        pulse.style.left = (geo.attachXDoc - geo.mainLeft - 4.5) + 'px';
+        pulse.style.top  = (geo.attachYDoc - geo.mainTop  - 4.5) + 'px';
+        for(var k=0;k<nodes.length;k++) nodes[k].classList.remove('lit');
+        return;
       }
+
+      // phase 2: the dot has been pulled out of the name and travels to ground
+      var denom = maxScroll - drainEnd;
+      var tp = denom > 0 ? (sY - drainEnd) / denom : 1;
+      if(atBottom) tp = 1;
+      tp = Math.min(1, Math.max(0, tp));
+      var railTail = groundDocY - geo.heroBottomDocY;   // straight rail from hero bottom to ground
+      var total = geo.pathLen + railTail;
+      var d = tp * total, px, py;
+      if(d <= geo.pathLen){
+        var pt = path.getPointAtLength(d);              // follow the bent lead exactly, curve and all
+        px = geo.ox + pt.x; py = geo.oy + pt.y;
+      } else {
+        px = geo.railXDoc; py = geo.heroBottomDocY + (d - geo.pathLen);
+      }
+      pulse.style.left = (px - geo.mainLeft - 4.5) + 'px';
+      pulse.style.top  = (py - geo.mainTop  - 4.5) + 'px';
+      var behind = false;
+      for(var i=0;i<nodes.length;i++){
+        var rc = nodes[i].getBoundingClientRect();
+        var cy = rc.top + window.scrollY + rc.height/2;
+        var dist = Math.abs(cy - py);
+        nodes[i].classList.toggle('lit', dist < 35);
+        if(dist < rc.height/2 + 4) behind = true;   // dot is over this component: hide it
+      }
+      pulse.style.opacity = behind ? '0' : '1';
     }
     function onScroll(){ if(!ticking){ ticking = true; requestAnimationFrame(update); } }
+    function onResize(){ layout(); onScroll(); }
 
     window.addEventListener('scroll', onScroll, {passive:true});
-    window.addEventListener('resize', onScroll);
-    update();
+    window.addEventListener('resize', onResize);
+    window.addEventListener('load', onResize);
+    if(document.fonts && document.fonts.ready){ document.fonts.ready.then(onResize); }
+    layout(); update();
   })();
 </script>
 </body>
