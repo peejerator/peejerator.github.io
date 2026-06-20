@@ -1,0 +1,22 @@
+  /* ---------- top bar ---------- */
+  .topbar{
+    position:sticky;top:0;z-index:50;
+    backdrop-filter:blur(10px);
+    background:linear-gradient(to bottom,rgba(12,15,20,.92),rgba(12,15,20,.72));
+    border-bottom:1px solid var(--line);
+  }
+  .topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:62px}
+  .brand{display:flex;align-items:center;gap:11px;font-family:var(--mono);font-size:13px;letter-spacing:.04em}
+  .brand .avatar{
+    width:30px;height:30px;border-radius:50%;object-fit:cover;
+    border:1px solid var(--line-2);display:block;
+  }
+  .brand b{color:var(--text);font-weight:500}
+  .brand .blink{width:7px;height:7px;border-radius:50%;background:var(--amber);box-shadow:0 0 10px var(--amber);animation:blink 2.6s steps(1) infinite}
+  @keyframes blink{0%,72%{opacity:1}73%,100%{opacity:.25}}
+  nav.links{display:flex;gap:26px;font-family:var(--mono);font-size:12.5px;letter-spacing:.03em;color:var(--muted)}
+  nav.links a{position:relative;padding:4px 0;transition:color .2s}
+  nav.links a:hover{color:var(--text)}
+  nav.links a::after{content:"";position:absolute;left:0;bottom:-2px;height:1px;width:0;background:var(--amber);transition:width .25s}
+  nav.links a:hover::after{width:100%}
+  @media(max-width:680px){nav.links{display:none}}

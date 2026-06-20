@@ -1,0 +1,58 @@
+  /* projects */
+  .projects{display:flex;flex-direction:column;gap:18px}
+  .card{
+    border:1px solid var(--line);border-radius:14px;background:var(--surface);
+    padding:30px 32px;position:relative;overflow:hidden;
+    transition:border-color .25s,transform .25s,background .25s;
+  }
+  .card::before{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--amber);
+    transform:scaleY(0);transform-origin:top;transition:transform .3s ease;
+  }
+  .card:hover{border-color:var(--line-2);background:var(--surface-2);transform:translateY(-2px)}
+  .card:hover::before{transform:scaleY(1)}
+  .card-top{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:10px 20px;margin-bottom:6px}
+  .card h3{font-family:var(--display);font-weight:500;font-size:23px;margin:0;letter-spacing:-.01em}
+  .card .span{font-family:var(--mono);font-size:12px;color:var(--muted)}
+  .card .role-sub{font-family:var(--mono);font-size:12.5px;color:var(--amber);margin:2px 0 16px;letter-spacing:.01em}
+  .card p{margin:0 0 18px;color:#C3CAD3;font-size:15px;line-height:1.6;max-width:780px}
+  .card p b{color:var(--text);font-weight:600}
+  .tags{display:flex;flex-wrap:wrap;gap:8px}
+  .tags span{
+    font-family:var(--mono);font-size:11.5px;color:var(--muted);
+    border:1px solid var(--line-2);border-radius:6px;padding:5px 10px;letter-spacing:.02em;
+    transition:color .2s,border-color .2s;
+  }
+  .card:hover .tags span{color:#C3CAD3}
+
+  /* education */
+  .edu-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:18px}
+  @media(max-width:760px){.edu-grid{grid-template-columns:1fr}}
+  .panel{border:1px solid var(--line);border-radius:14px;background:var(--surface);padding:28px 30px}
+  .panel h3{font-family:var(--display);font-weight:500;font-size:20px;margin:0 0 4px;letter-spacing:-.01em}
+  .panel .school{font-family:var(--mono);font-size:12.5px;color:var(--muted);margin-bottom:22px}
+  .degree{display:flex;align-items:baseline;justify-content:space-between;gap:14px;padding:13px 0;border-top:1px solid var(--line)}
+  .degree:first-of-type{border-top:none;padding-top:0}
+  .degree .d-name{font-size:15px;color:var(--text)}
+  .degree .d-name span{display:block;font-family:var(--mono);font-size:11.5px;color:var(--amber);margin-top:3px;letter-spacing:.03em}
+  .degree .d-when{font-family:var(--mono);font-size:12px;color:var(--muted-2);white-space:nowrap}
+  .course-block{margin-top:22px}
+  .course-block:first-child{margin-top:0}
+  .course-block .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--muted-2);text-transform:uppercase;margin-bottom:9px}
+  .course-block .list{font-size:14px;color:#AEB6C0;line-height:1.75}
+
+  /* stack */
+  .stack{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+  @media(max-width:760px){.stack{grid-template-columns:1fr}}
+  .stack .panel h4{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;color:var(--amber);text-transform:uppercase;margin:0 0 16px;font-weight:500}
+  .stack .panel .items{display:flex;flex-wrap:wrap;gap:8px}
+  .stack .panel .items span{
+    font-family:var(--mono);font-size:12.5px;color:#C3CAD3;
+    border:1px solid var(--line);border-radius:6px;padding:6px 11px;background:var(--ink-2);
+    transition:border-color .2s,color .2s;
+  }
+  .stack .panel .items span:hover{border-color:var(--amber-deep);color:var(--text)}
+  .stack .panel.soft .items span{display:block;width:100%;border:none;background:none;padding:0;
+    position:relative;padding-left:18px;color:#C3CAD3;font-size:14.5px;font-family:var(--body)}
+  .stack .panel.soft .items{gap:11px}
+  .stack .panel.soft .items span::before{content:"";position:absolute;left:0;top:11px;width:8px;height:1px;background:var(--amber)}

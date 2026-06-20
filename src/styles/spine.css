@@ -1,0 +1,72 @@
+  /* ---------- circuit spine ---------- */
+  :root{ --gutter:64px; --rail:#2B3A47; }
+  @media(max-width:760px){ :root{ --gutter:42px } }
+  @media(max-width:480px){ :root{ --gutter:28px } }
+
+  main{ position:relative; --col-left: max(28px, calc((100% - var(--maxw))/2 + 28px)); }
+  .hero, .section{ position:relative; --col-left: max(28px, calc((100% - var(--maxw))/2 + 28px)); }
+
+  /* indent content so the rail has its own column */
+  .hero > .wrap, .section > .wrap{ padding-left: calc(28px + var(--gutter)); }
+
+  /* the rail itself */
+  .hero::before, .section::before{
+    content:""; position:absolute; top:0; bottom:0;
+    left: calc(var(--col-left) + var(--gutter)/2 - 1px);
+    width:2px; z-index:0;
+  }
+  /* each section's rail has a transparent gap where its component sits (gap bounds set by JS) */
+  .section::before{
+    background:linear-gradient(to bottom,
+      var(--rail) 0, var(--rail) var(--ga,100%),
+      transparent var(--ga,100%), transparent var(--gb,100%),
+      var(--rail) var(--gb,100%), var(--rail) var(--end,100%),
+      transparent var(--end,100%));
+  }
+  .hero::before{ background:linear-gradient(180deg, transparent, var(--rail) 96px); }
+
+  /* the name is the power source: the letters glow, then drain right-to-left as the dot pulls the charge out */
+  body{ --edgepx:3000px; }
+  .hero h1{ position:relative; }
+  .hero h1 .ghost{
+    position:absolute; left:-60px; top:-46px; z-index:-1; pointer-events:none;
+    padding:46px 60px; color:transparent;
+    text-shadow:0 0 6px rgba(240,169,58,.95), 0 0 16px rgba(240,169,58,.6), 0 0 32px rgba(240,169,58,.34);
+    -webkit-mask-image:linear-gradient(to right, #000 0, #000 calc(var(--edgepx) - 40px), transparent var(--edgepx));
+            mask-image:linear-gradient(to right, #000 0, #000 calc(var(--edgepx) - 40px), transparent var(--edgepx));
+  }
+
+  /* bent lead drawn from the name into the rail (path built by JS) */
+  .source-lead{ position:absolute; inset:0; width:100%; height:100%; z-index:0; pointer-events:none; overflow:visible; }
+  .source-lead path{ fill:none; stroke:var(--rail); stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  .js-spine .hero::before{ display:none; }
+
+  /* section heading bullet becomes a junction node on the rail */
+  /* schematic component sits at each heading as its node on the rail */
+  .sec-head{ position:relative; }
+  .sec-head .node{
+    position:absolute; left: calc(-1 * var(--gutter)/2); top:50%;
+    transform:translate(-50%,-50%); z-index:2; line-height:0;
+  }
+  .sec-head .node svg{ position:relative; z-index:1; display:block; height:38px; width:auto; transition:filter .25s; }
+  @media(max-width:480px){ .sec-head .node svg{ height:30px } }
+
+  /* lit state: glow follows the symbol shape, never a box */
+  .sec-head .node.lit svg, .comp.lit svg{ filter:drop-shadow(0 0 6px rgba(240,169,58,.8)) brightness(2.0); }
+
+  /* ground terminates the rail */
+  .comp{
+    position:absolute; z-index:2; bottom:-8px;
+    left: calc(var(--col-left) + var(--gutter)/2);
+    transform:translateX(-50%);
+  }
+  .comp svg{ position:relative; z-index:1; display:block; transition:filter .25s; }
+  @media(max-width:480px){ .comp{ transform:translateX(-50%) scale(.82) } }
+
+  /* travelling current pulse */
+  .pulse{
+    position:absolute; z-index:1; width:9px; height:9px; border-radius:50%;
+    left: calc(var(--col-left) + var(--gutter)/2 - 4px);
+    background:var(--amber); box-shadow:0 0 12px 3px rgba(240,169,58,.75);
+    top:0; opacity:0; pointer-events:none; will-change:left,top; transition:opacity .25s linear;
+  }
