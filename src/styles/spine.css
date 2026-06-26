@@ -31,7 +31,8 @@
   .hero h1 .ghost{
     position:absolute; left:-60px; top:-46px; z-index:-1; pointer-events:none;
     padding:46px 60px; color:transparent;
-    text-shadow:0 0 6px rgba(240,169,58,.95), 0 0 16px rgba(240,169,58,.6), 0 0 32px rgba(240,169,58,.34);
+    /* name glow disabled for now — uncomment the line below to restore the amber glow */
+    /* text-shadow:0 0 6px rgba(240,169,58,.95), 0 0 16px rgba(240,169,58,.6), 0 0 32px rgba(240,169,58,.34); */
     -webkit-mask-image:linear-gradient(to right, #000 0, #000 calc(var(--edgepx) - 40px), transparent var(--edgepx));
             mask-image:linear-gradient(to right, #000 0, #000 calc(var(--edgepx) - 40px), transparent var(--edgepx));
   }

@@ -19,4 +19,8 @@
   nav.links a:hover{color:var(--text)}
   nav.links a::after{content:"";position:absolute;left:0;bottom:-2px;height:1px;width:0;background:var(--amber);transition:width .25s}
   nav.links a:hover::after{width:100%}
+  nav.links .nav-sep{align-self:center;width:1px;height:14px;background:var(--line-2)}
+  nav.links .icon-link{display:inline-flex;align-items:center;align-self:center}
+  nav.links .icon-link svg{width:17px;height:17px;fill:currentColor;display:block}
+  nav.links .icon-link::after{display:none}
   @media(max-width:680px){nav.links{display:none}}
