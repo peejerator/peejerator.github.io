@@ -1,0 +1,54 @@
+  /* ---------- interactive polish (pointer-reactive, no deps) ---------- */
+  /* All decorative motion here is opt-in: the reduced-motion kill switch in
+     reveal.css disables the transitions, and the JS no-ops under reduced motion. */
+
+  @media (prefers-reduced-motion: no-preference) {
+
+    /* tilt containers get perspective so child rotation reads as depth */
+    .projects, .edu-grid, .stack { perspective: 1100px; }
+
+    /* elements that tilt toward the cursor */
+    .card, .edu-grid .panel, .stack .panel {
+      transform-style: preserve-3d;
+      will-change: transform;
+    }
+    .card { transition: border-color .25s, transform .14s ease-out, background .25s; }
+    .edu-grid .panel, .stack .panel {
+      position: relative;
+      transition: border-color .25s, transform .14s ease-out, background .25s;
+    }
+
+    /* pointer spotlight: a soft radial that tracks the cursor within the surface */
+    .card::after, .edu-grid .panel::after, .stack .panel::after {
+      content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+      border-radius: inherit;
+      background: radial-gradient(300px circle at var(--sx, 50%) var(--sy, 50%),
+                  rgba(240, 169, 58, .13), transparent 60%);
+      opacity: 0; transition: opacity .3s ease;
+    }
+    .card:hover::after, .edu-grid .panel:hover::after, .stack .panel:hover::after { opacity: 1; }
+
+    /* keep real content above the spotlight layer */
+    .card > *, .edu-grid .panel > *, .stack .panel > * { position: relative; z-index: 1; }
+
+    /* the fixed engineering grid drifts slightly opposite the cursor for depth */
+    body::before {
+      transform: translate3d(var(--gx, 0px), var(--gy, 0px), 0);
+      will-change: transform;
+      transition: transform .3s ease-out;
+    }
+
+    /* amber glow that follows the cursor, sits behind content, shows through the hero */
+    .cursor-glow {
+      position: fixed; top: 0; left: 0; width: 520px; height: 520px; border-radius: 50%;
+      pointer-events: none; z-index: 0; opacity: 0;
+      transform: translate3d(calc(var(--cgx, -50vw) - 260px), calc(var(--cgy, -50vh) - 260px), 0);
+      background: radial-gradient(circle, rgba(240, 169, 58, .10), transparent 62%);
+      mix-blend-mode: screen; filter: blur(6px);
+      transition: opacity .5s ease;
+    }
+    body.cg-on .cursor-glow { opacity: 1; }
+  }
+
+  /* count-up spans inherit the surrounding type; tabular figures avoid width jitter */
+  .readout .v .cu { font-variant-numeric: tabular-nums; }

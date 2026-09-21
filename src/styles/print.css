@@ -1,0 +1,64 @@
+  /* ---------- print / save-as-PDF ----------
+     Renders the page as a clean light document: drops the dark theme and all
+     decorative circuitry, keeps the content, and controls page breaks. */
+
+  @media print {
+    /* light document */
+    body{background:#fff !important;color:#111 !important;overflow:visible !important}
+
+    /* drop decoration: grid, circuit rail, pulse, glows, scope, avatars of motion */
+    body::before,
+    .pulse,
+    .source-lead,
+    .cursor-glow,
+    .hero-signature,
+    .hero::after,
+    .hero::before,
+    .section::before,
+    .sec-head .node,
+    .comp,
+    .scope,
+    .skip-link,
+    .copy-btn,
+    .nav-sep{display:none !important}
+
+    /* chrome we don't want on paper */
+    .topbar{display:none !important}
+
+    /* undo the rail gutter so content sits at a normal margin */
+    .hero > .wrap,
+    .section > .wrap{padding-left:28px !important}
+    .hero{padding-top:0 !important;min-height:0 !important}
+    .section{padding-top:26px !important}
+    main{--gutter:0 !important}
+
+    /* type to ink */
+    h1,h2,h3,h4{color:#111 !important}
+    h1 .accent,.accent,.card h3,.entry h3{color:#111 !important}
+    .thesis,.card p,.entry ul li,.course-block .list,.degree .d-name{color:#222 !important}
+    .eyebrow,.role-sub,.card .role-sub,.entry .role-sub,.card .span,
+    .stack .panel h4,.course-block .lbl,.entry .when,.degree .d-when{color:#555 !important}
+    .thesis b,.card p b,.entry ul li b{color:#000 !important}
+
+    /* surfaces: hairline boxes instead of dark fills */
+    .card,.panel,.readout{
+      background:#fff !important;border:1px solid #ccc !important;box-shadow:none !important;
+      transform:none !important;
+    }
+    .card::before,.card::after,.panel::after{display:none !important}
+    .readout li{border-color:#ccc !important}
+    .readout .v{color:#111 !important}
+    .tags span,.stack .panel .items span{border-color:#bbb !important;color:#333 !important;background:none !important}
+    .readout .v em,.degree .d-name span{color:#000 !important}
+
+    /* links: ink, and expose external URLs after the visible label */
+    a{color:#111 !important;text-decoration:none !important}
+    footer{background:#fff !important;border-top:1px solid #ccc !important;margin-top:40px !important}
+    .contacts a,.contacts a span{color:#111 !important}
+    .foot-grid .big a{color:#111 !important}
+
+    /* page-break hygiene */
+    .sec-head,h1,h2,h3{break-after:avoid}
+    .card,.entry,.edu-grid .panel,.stack .panel{break-inside:avoid}
+    section{break-inside:auto}
+  }

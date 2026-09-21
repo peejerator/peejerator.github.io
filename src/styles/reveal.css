@@ -7,6 +7,19 @@
   /* focus */
   a:focus-visible,button:focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:3px}
 
+  /* skip link: off-screen until focused, then anchored top-left */
+  .skip-link{
+    position:absolute;left:-9999px;top:0;z-index:100;
+    background:var(--amber);color:#1a1206;font-family:var(--mono);font-size:13px;
+    padding:10px 16px;border-radius:0 0 8px 0;letter-spacing:.02em;
+  }
+  .skip-link:focus{left:0}
+
+  /* anchor jumps clear the sticky topbar */
+  :target{scroll-margin-top:84px}
+  .section,.hero,footer{scroll-margin-top:84px}
+  #top{scroll-margin-top:0}
+
   @media(prefers-reduced-motion:reduce){
     *{animation:none!important;transition:none!important}
     html{scroll-behavior:auto}
