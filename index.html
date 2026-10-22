@@ -34,15 +34,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <script type="module" src="/src/main.ts"></script>
 </head>
-<body data-graphic-variant="4">
-
+<body>
 <a class="skip-link" href="#top">Skip to content</a>
-
+<div class="circuit-stage" aria-hidden="true"><canvas id="circuit-world"></canvas><div class="stage-shade"></div></div>
 <header class="topbar">
   <div class="wrap">
     <a class="brand" href="#top" aria-label="Patrick Canady — home">
       <img class="avatar" src="data:image/jpeg;base64,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" alt="Patrick Canady" width="30" height="30" />
-      <b>patrick&nbsp;canady</b><span class="blink" aria-hidden="true"></span>
+      <b>patrick&nbsp;canady</b>
     </a>
     <nav class="links" aria-label="Primary">
       <a href="#work">work</a>
@@ -60,13 +59,22 @@
     </nav>
   </div>
 </header>
+<div class="journey-chrome">
+  <button class="motion-toggle" type="button" aria-pressed="false">Pause circuit motion</button>
+</div>
+<nav class="chapter-nav" aria-label="Circuit chapters">
+  <a href="#top" aria-label="Introduction"><span>01</span><i></i></a>
+  <a href="#work" aria-label="Selected work"><span>02</span><i></i></a>
+  <a href="#experience" aria-label="Experience"><span>03</span><i></i></a>
+  <a href="#education" aria-label="Education"><span>04</span><i></i></a>
+  <a href="#stack" aria-label="Technical stack"><span>05</span><i></i></a>
+  <a href="#contact" aria-label="Contact"><span>06</span><i></i></a>
+</nav>
+<main>
+<section class="scene hero" id="top" data-station="0" data-side="left">
+  <div class="scene-content">
 
-<main id="top">
-  <div class="pulse" aria-hidden="true"></div>
-  <!-- HERO -->
-  <section class="hero" aria-label="Introduction">
-    <div class="wrap">
-      <p class="eyebrow">Computer Science · Electrical Engineering</p>
+          <p class="eyebrow">Computer Science · Electrical Engineering</p>
       <h1><span class="ghost" aria-hidden="true">Patrick<br>Canady</span>Patrick<br><span class="accent">Canady</span></h1>
       <p class="thesis">Computer science and electrical engineering grad who likes working with teams to design, build, and ship high-value products. I like getting to the root of how things work, finding ways to improve them, and building the next version. That has taken me from FPGA designs to embedded hardware to a camera system that follows athletes around a mat, blending software and hardware to solve real problems.</p>
 
@@ -76,95 +84,62 @@
         <li><div class="k">Teaching</div><div class="v">~3 <em>yrs</em></div></li>
       </ul>
 
-      <div class="hero-signature">
-        <div class="variant-4" data-variant="4">
-          <div class="sig-stage sig-bg">
-            <div class="scope" aria-hidden="true">
-              <div class="scope-head">
-                <span>logic capture · background treatment</span>
-                <span class="live"><i></i>live</span>
-              </div>
-              <svg class="scope-svg" viewBox="0 0 1200 148" preserveAspectRatio="none" role="img">
-                <defs>
-                  <g id="period-bg">
-                    <path d="M0 44 H20 V18 H40 V44 H60 V18 H80 V44 H100 V18 H120 V44 H140 V18 H160 V44 H180 V18 H200 V44 H220 V18 H240 V44 H260 V18 H280 V44 H300 V18 H320 V44 H340 V18 H360 V44 H380 V18 H400 V44 H420 V18 H440 V44 H460 V18 H480 V44 H500 V18 H520 V44 H540 V18 H560 V44 H580 V18 H600 V44" fill="none" stroke="#F0A93A" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
-                    <path d="M0 90 H60 V64 H100 V90 H140 V64 H160 V90 H260 V64 H300 V90 H320 V64 H400 V90 H460 V64 H500 V90 H560 V64 H600 V90" fill="none" stroke="#56C2D6" stroke-opacity=".85" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
-                    <path d="M0 136 H180 V110 H380 V136 H600" fill="none" stroke="#F0A93A" stroke-opacity=".62" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
-                  </g>
-                  <clipPath id="plot-bg"><rect x="58" y="0" width="1142" height="148"/></clipPath>
-                </defs>
-                <text x="14" y="34" fill="#5C6573" font-family="JetBrains Mono, monospace" font-size="11">CLK</text>
-                <text x="14" y="80" fill="#5C6573" font-family="JetBrains Mono, monospace" font-size="11">DAT</text>
-                <text x="14" y="126" fill="#5C6573" font-family="JetBrains Mono, monospace" font-size="11">EN</text>
-                <line x1="52" y1="10" x2="52" y2="138" stroke="#232B35" stroke-width="1"/>
-                <g clip-path="url(#plot-bg)">
-                  <g class="trace">
-                    <use href="#period-bg" x="0"/>
-                    <use href="#period-bg" x="600"/>
-                    <use href="#period-bg" x="1200"/>
-                  </g>
-                </g>
-              </svg>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- WORK -->
-  <section class="section" id="work" aria-label="Selected work">
-    <div class="wrap">
-      <div class="sec-head reveal"><span class="node comp-resistor" title="resistor" aria-hidden="true"><svg viewBox="0 0 46 72" fill="none"><path d="M23 2 V20 L31 24 L15 30 L31 36 L15 42 L31 48 L15 54 L23 58 V70" stroke="#F0A93A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><h2>Selected work</h2><span class="rule"></span></div>
-      <div class="projects">
-
-        <article class="card reveal">
+      <a class="journey-start" href="#work"><span class="scroll-line"></span>View selected work <span>↓</span></a>
+  </div>
+</section><div id="work" class="chapter-group"><section class="scene"  data-station="1" data-side="left">
+  <div class="scene-content">
+    <p class="chapter-label"><span>01</span> / Selected work · 01 / 03</p>
+    <h2 class="scene-heading">Grappler Camera System</h2>
+    <article class="card reveal">
           <div class="card-top">
-            <h3>Grappler Camera System</h3>
             <span class="span">Aug 2025 — May 2026</span>
           </div>
           <div class="role-sub">Hardware Lead · distributed embedded + computer vision</div>
           <p>Led a multidisciplinary team building an <b>autonomous multi-camera tracking platform</b> for combat sports. Each Raspberry Pi&nbsp;5 node runs real-time <b>YOLO11n-pose</b> inference on a live feed and drives PCA9685 servo HATs to keep athletes centered in frame, coordinated by a Flask/Socket.IO server over a custom inter-node protocol. Owned hardware design and integration across the full lifecycle, plus the operation and evidence manuals and scholarship-in-practice submission.</p>
           <div class="tags"><span>Raspberry Pi 5</span><span>YOLO11n-pose</span><span>PCA9685</span><span>Flask</span><span>Socket.IO</span><span>Python</span></div>
         </article>
-
-        <article class="card reveal">
+  </div>
+</section>
+<section class="scene"  data-station="2" data-side="right">
+  <div class="scene-content">
+    <p class="chapter-label"><span>02</span> / Selected work · 02 / 03</p>
+    <h2 class="scene-heading">Power-Aware Systolic MAC Array</h2>
+    <article class="card reveal">
           <div class="card-top">
-            <h3>Power-Aware Systolic MAC Array</h3>
             <span class="span">Jan — Apr 2026</span>
           </div>
           <div class="role-sub">RTL Designer · FPGA / digital design</div>
           <p>Designed a fully synthesizable <b>3×3 output-stationary systolic MAC array</b> in Verilog with wavefront clock gating and DVFS-style power modes (FULL / HALF / SLEEP) on a Xilinx Zynq UltraScale+. Led the RTL for the activity tracker, clock-gate controller, and mode FSM. <b>Closed timing at 100&nbsp;MHz (WNS = +6.98&nbsp;ns)</b> and demonstrated up to <b>10× lower switching activity</b> versus the ungated baseline, validated across 12 post-implementation power scenarios.</p>
           <div class="tags"><span>Verilog</span><span>Zynq UltraScale+</span><span>Vivado</span><span>Clock gating</span><span>DVFS</span><span>Power analysis</span></div>
         </article>
-
-        <article class="card reveal">
+  </div>
+</section>
+<section class="scene"  data-station="3" data-side="left">
+  <div class="scene-content">
+    <p class="chapter-label"><span>03</span> / Selected work · 03 / 03</p>
+    <h2 class="scene-heading">C++ Autograding Framework</h2>
+    <article class="card reveal">
           <div class="card-top">
-            <h3>C++ Autograding Framework</h3>
             <span class="span">2024 — 2026</span>
           </div>
           <div class="role-sub">Systems Tool · in active use each semester</div>
           <p>A modular, extensible autograding engine: compiler diagnostics, <b>rubric-driven deduction tracking</b> with scope capping, <b>libclang AST static analysis</b>, automated program I/O testing, and LLM-assisted review (Ollama / qwen3:14b) for subjective criteria. A batch interactive interface adds back-navigation, skip controls, and deduction undo — collapsing 800+ lines of one-off scripting per assignment down to ~150-line rubric files.</p>
           <div class="tags"><span>Python</span><span>libclang</span><span>Ollama</span><span>subprocess I/O</span><span>AST analysis</span></div>
         </article>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- EXPERIENCE -->
-  <section class="section" id="experience" aria-label="Experience">
-    <div class="wrap">
-      <div class="sec-head reveal"><span class="node comp-capacitor" title="capacitor" aria-hidden="true"><svg viewBox="0 0 46 60" fill="none" stroke="#F0A93A" stroke-width="2.4" stroke-linecap="round"><path d="M23 2 V25"/><path d="M9 25 H37"/><path d="M9 35 H37"/><path d="M23 35 V58"/></svg></span><h2>Experience</h2><span class="rule"></span></div>
-
-      <div class="entry reveal">
+  </div>
+</section>
+</div>
+<div id="experience" class="chapter-group"><section class="scene"  data-station="4" data-side="right">
+  <div class="scene-content">
+    <p class="chapter-label"><span>04</span> / Experience · 01 / 02</p>
+    <h2 class="scene-heading">Teaching Assistant &amp; Tool Developer</h2>
+    <div class="entry reveal">
         <div class="when">
           <span class="org">Florida State University</span>
           Aug 2023 — May 2026
           <span class="loc">Dept. of Computer Science · Tallahassee, FL</span>
         </div>
         <div>
-          <h3>Teaching Assistant &amp; Tool Developer</h3>
           <div class="role-sub">COP 3014 · COP 3363 · COP 3330 · CGS 2100</div>
           <ul>
             <li>Spent <b>3 academic years as a teaching assistant for 4 CS courses</b>, helping 100+ students per semester through weekly recitations on C++, data structures, algorithm analysis, and debugging.</li>
@@ -174,14 +149,19 @@
         </div>
       </div>
 
-      <div class="entry reveal">
+  </div>
+</section>
+<section class="scene"  data-station="5" data-side="left">
+  <div class="scene-content">
+    <p class="chapter-label"><span>05</span> / Experience · 02 / 02</p>
+    <h2 class="scene-heading">Data Consultant</h2>
+    <div class="entry reveal">
         <div class="when">
           <span class="org">BST Global</span>
           May 2023 — Aug 2023
           <span class="loc">Internship · Tampa, FL</span>
         </div>
         <div>
-          <h3>Data Consultant</h3>
           <div class="role-sub">ERP data conversion · SQL ETL</div>
           <ul>
             <li>Migrated client project data from legacy platforms into BST Global's ERP system, working through complex data-mapping challenges with <b>SQL-based ETL workflows</b>.</li>
@@ -190,16 +170,15 @@
           </ul>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- EDUCATION -->
-  <section class="section" id="education" aria-label="Education">
-    <div class="wrap">
-      <div class="sec-head reveal"><span class="node comp-inductor" title="inductor" aria-hidden="true"><svg viewBox="0 0 46 72" fill="none"><path d="M23 2 V16 a6 6 0 0 1 0 12 a6 6 0 0 1 0 12 a6 6 0 0 1 0 12 a6 6 0 0 1 0 12 V70" stroke="#F0A93A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span><h2>Education</h2><span class="rule"></span></div>
-      <div class="edu-grid">
+  </div>
+</section>
+</div>
+<section class="scene education-scene" id="education" data-station="6" data-side="right">
+  <div class="scene-content">
+    <p class="chapter-label"><span>06</span> / Education</p>
+    <h2 class="scene-heading">Dual-Degree Program</h2>
+          <div class="edu-grid">
         <div class="panel reveal">
-          <h3>Dual-Degree Program</h3>
           <div class="school">Florida State University · FAMU-FSU College of Engineering — Tallahassee, FL</div>
           <div class="degree">
             <div class="d-name">B.S. Computer Science<span>Summa Cum Laude</span></div>
@@ -229,14 +208,14 @@
           </div>
         </div>
       </div>
-    </div>
-  </section>
 
-  <!-- STACK -->
-  <section class="section" id="stack" aria-label="Technical stack">
-    <div class="wrap">
-      <div class="sec-head reveal"><span class="node comp-ic" title="integrated circuit" aria-hidden="true"><svg viewBox="0 0 56 66" fill="none" stroke="#F0A93A"><path d="M28 2 V14" stroke-width="2.4" stroke-linecap="round"/><rect x="14" y="14" width="28" height="36" rx="3" stroke-width="2.4"/><path d="M28 50 V64" stroke-width="2.4" stroke-linecap="round"/><path d="M14 23 H7 M14 32 H7 M14 41 H7 M42 23 H49 M42 32 H49 M42 41 H49" stroke-width="2" stroke-linecap="round"/><circle cx="20" cy="20" r="1.8" fill="#F0A93A" stroke="none"/></svg></span><h2>Stack</h2><span class="rule"></span></div>
-      <div class="stack">
+  </div>
+</section>
+<section class="scene stack-scene" id="stack" data-station="7" data-side="left">
+  <div class="scene-content">
+    <p class="chapter-label"><span>07</span> / Technical stack</p>
+    <h2 class="scene-heading">Technical stack</h2>
+          <div class="stack">
         <div class="panel reveal">
           <h4>Languages</h4>
           <div class="items"><span>Python</span><span>C++</span><span>C</span><span>Verilog</span><span>VHDL</span><span>Java</span><span>JavaScript</span><span>SQL</span><span>ARM Assembly</span><span>Bash</span></div>
@@ -258,16 +237,13 @@
           <div class="items"><span>Team leadership &amp; cross-functional collaboration</span><span>Technical mentorship, coaching, and curriculum design</span><span>Stakeholder communication &amp; technical writing</span><span>Agile / stand-up workflows and self-directed project management</span></div>
         </div>
       </div>
-    </div>
-    <div class="comp comp-ground" aria-hidden="true" title="ground">
-      <svg width="40" height="44" viewBox="0 0 46 50" fill="none" stroke="#F0A93A" stroke-width="2.4" stroke-linecap="round"><path d="M23 2 V22"/><path d="M9 22 H37"/><path d="M14 30 H32"/><path d="M18 38 H28"/></svg>
-    </div>
-  </section>
+
+  </div>
+</section>
 </main>
 
-<!-- CONTACT / FOOTER -->
-<footer id="contact">
-  <div class="wrap">
+<footer id="contact" class="scene contact-scene" data-station="8">
+  <div class="wrap scene-content">
     <div class="foot-grid">
       <div>
         <p class="big">Questions, ideas,<br>or just <a href="mailto:patrick.canady@ifoundry.com">want to chat?</a></p>
@@ -304,6 +280,5 @@
     </div>
   </div>
 </footer>
-
 </body>
 </html>

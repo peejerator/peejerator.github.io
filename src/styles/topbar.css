@@ -12,7 +12,6 @@
     border:1px solid var(--line-2);display:block;
   }
   .brand b{color:var(--text);font-weight:500}
-  .brand .blink{width:7px;height:7px;border-radius:50%;background:var(--amber);box-shadow:0 0 10px var(--amber);animation:blink 2.6s steps(1) infinite}
   @keyframes blink{0%,72%{opacity:1}73%,100%{opacity:.25}}
   nav.links{display:flex;gap:26px;font-family:var(--mono);font-size:12.5px;letter-spacing:.03em;color:var(--muted)}
   nav.links a{position:relative;padding:4px 0;transition:color .2s}
