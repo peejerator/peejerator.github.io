@@ -46,3 +46,31 @@
   .tools-page + footer{margin-top:72px}
   .foot-bottom a{color:var(--muted);transition:color .2s}
   .foot-bottom a:hover{color:var(--amber)}
+
+  /* search and categories */
+  .tools-head{margin-bottom:34px}
+  .tools-controls{display:flex;flex-wrap:wrap;align-items:center;gap:14px 18px;margin-bottom:46px}
+  .tool-search{flex:1 1 320px;max-width:460px;display:flex;align-items:center;gap:10px;padding:0 12px;height:44px;
+    border:1px solid var(--line-2);border-radius:10px;background:var(--surface);color:var(--muted);transition:border-color .2s}
+  .tool-search:focus-within{border-color:var(--amber);color:var(--amber)}
+  .tool-search input{flex:1;min-width:0;height:100%;border:0;outline:0;background:none;color:var(--text);font-family:var(--mono);font-size:14px}
+  .tool-search input::placeholder{color:var(--muted-2)}
+  .tool-search input::-webkit-search-cancel-button{filter:grayscale(1)}
+  .tool-search kbd{font-family:var(--mono);font-size:11px;color:var(--muted-2);border:1px solid var(--line-2);border-radius:5px;padding:1px 6px}
+  .tool-search:focus-within kbd{display:none}
+  .cat-chips{display:flex;flex-wrap:wrap;gap:8px}
+  .cat-chips button{font-family:var(--mono);font-size:12.5px;letter-spacing:.04em;color:var(--muted);background:none;
+    border:1px solid var(--line-2);border-radius:999px;padding:7px 14px;cursor:pointer;transition:color .2s,border-color .2s,background .2s}
+  .cat-chips button:hover{color:var(--text);border-color:var(--muted-2)}
+  .cat-chips button[aria-pressed="true"]{color:#1a1206;background:var(--amber);border-color:var(--amber)}
+  .cat-chips .n{opacity:.7;margin-left:4px}
+
+  .tool-cat{margin-bottom:8px}
+  .tool-cat[hidden]{display:none}
+  .cat-head{display:flex;align-items:baseline;gap:14px;margin-bottom:26px}
+  .cat-head .pin{font-size:15px;line-height:1;color:var(--amber);align-self:center}
+  .cat-head h2{font-family:var(--display);font-weight:700;font-size:clamp(24px,3.4vw,32px);letter-spacing:-.02em;margin:0}
+  .cat-head .cat-count{font-family:var(--mono);font-size:12px;color:var(--muted-2);letter-spacing:.06em}
+  .cat-head .rule{flex:1;height:1px;background:linear-gradient(90deg,var(--line-2),transparent);align-self:center;margin-left:6px}
+  .tool-card[hidden]{display:none}
+  .tools-empty{font-family:var(--mono);font-size:14px;color:var(--muted);margin:8px 0 0}
